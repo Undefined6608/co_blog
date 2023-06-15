@@ -1,0 +1,61 @@
+.headerBox
+  background: rgba(255, 255, 255, .9)
+  border-bottom: 1px solid #ececec
+
+  .header
+    width: 95%
+    height: 100%
+    margin: 0 auto
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    justify-content: space-between
+
+    .header-left
+      width: auto
+      height: 100%
+      line-height: 72px
+      text-align: left
+
+      .logo
+        font-size: 20px
+        text-decoration: none
+        color: black
+
+      .logo:hover
+        color: #585858
+
+    .header-right
+      width: 480px
+      height: 100%
+      display: flex
+      flex-wrap: wrap
+      align-items: center
+      justify-content: space-between
+
+      .btn-list
+        display: inline-block
+        width: 57px
+        text-align: center
+        font-size: 14px
+        font-weight: 500
+        line-height: 21px
+        color: #4b5563
+        text-decoration: none
+
+      .icon-item
+        width: 24px
+        height: 24px
+
+        img
+          width: 100%
+          height: 100%
+
+
+@media (max-width: 780px)
+  .headerBox
+    .header
+      .header-right
+        width: 120px
+        .btn-list, .input-box
+          display: none
