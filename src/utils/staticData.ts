@@ -16,10 +16,5 @@ export const userSettingList: UserSettingInterface[] = [
         icon: "/static/images/fankui.png",
         name: "用户反馈",
         href: "/feedBack"
-    }, {
-        id: crypto.randomUUID(),
-        icon: "/static/images/tuichudenglu.png",
-        name: "退出登录",
-        href:"/"
     }
 ]

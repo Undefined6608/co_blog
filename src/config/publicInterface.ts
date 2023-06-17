@@ -5,7 +5,7 @@ export interface SizeInterface {
     }
 }
 
-export interface LoginInterface {
+export interface BaseInterface {
     code: number,
     msg: string,
     data: {}

@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "@/sass/common/loginComponent.sass";
 import PubSub from "pubsub-js";
-import {SectionBox} from "./sectionBox";
 import {LoginForm} from "./loginForm";
 export const LoginComponent: React.FC = () => {
     const [show, setShow] = useState(false);
-    const [showType, setShowType] = useState(0);
 
     useEffect(() => {
         const subToken = PubSub.subscribe('loginStatus', (_, loginShow) => {
@@ -24,10 +22,6 @@ export const LoginComponent: React.FC = () => {
         event.stopPropagation();  // 阻止事件冒泡
     }
 
-    const handlerType = (ev: number) => {
-        setShowType(ev);
-    }
-
     return (
         <>
             {
@@ -37,8 +31,7 @@ export const LoginComponent: React.FC = () => {
                             <div className="loginLogo">
                                 Co-Blog
                             </div>
-                            <SectionBox onAction={handlerType}/>
-                            <LoginForm param={{type: showType}}/>
+                            <LoginForm/>
                         </div>
                     </div> :
                     null

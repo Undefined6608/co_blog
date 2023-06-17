@@ -1,4 +1,5 @@
 import axios, {AxiosPromise} from 'axios';
+import PubSub from "pubsub-js";
 
 // 请求方法名枚举
 enum RequestMethod {
@@ -47,4 +48,21 @@ export function put<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
 // DELETE 请求方法
 export function del<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
     return request<T>(RequestMethod.Delete, url, params);
+}
+
+export const loginSuccess = () => {
+    PubSub.publish('openTip', {
+        type: 'success',
+        msg: {message: "登录成功！", description: ""}
+    })
+    setTimeout(() => {
+        window.location.reload();
+    }, 1000);
+}
+
+export const loginFail = (r: any) => {
+    PubSub.publish('openTip', {
+        type: 'warning',
+        msg: {message: "登录失败：", description: r.data.msg}
+    })
 }

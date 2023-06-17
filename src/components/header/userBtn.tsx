@@ -4,26 +4,48 @@ import {SizeInterface, UserInfoInterface} from "../../config/publicInterface";
 import {userSettingList} from "../../utils/staticData";
 import {Link} from "react-router-dom";
 import PubSub from "pubsub-js";
-import {getUserInfo} from "../../config/api";
+import {getUserInfo, logout} from "../../config/api";
 import {LoginOutlined} from "@ant-design/icons";
+import Cookies from "js-cookie";
 
 export const UserBtn: React.FC<SizeInterface> = ({param}) => {
     const [userInfo, setUserInfo] = useState<UserInfoInterface | null>(null);
     useEffect(() => {
+        // 获取个人信息
         getUserInfo().then((r) => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
             // console.log(r.data)
-            if (r.data.code === 200) return setUserInfo(r.data);
-            if (r.data.code === 404) {
-            }
+            if (r.code === 200) return setUserInfo(r);
         })
     }, []);
+    // 打开登录组件
     const login = () => {
         if (userInfo) return;
         PubSub.publish('loginStatus', true);
+    }
+    // 退出登录请求
+    const handleLogout = (ev: any) => {
+        ev.preventDefault();
+        logout().then((r) => {
+            // console.log(r.data)
+            if (r.code === 200) {
+                Cookies.remove('connect.sid', {path: '/'});
+                PubSub.publish('openTip', {
+                    type: 'success',
+                    msg: {message: "退出成功！", description: ""}
+                })
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+                return;
+            }
+            if (r.code === 404) {
+                PubSub.publish('openTip', {
+                    type: 'warning',
+                    msg: {message: "退出失败", description: r.msg}
+                })
+                return;
+            }
+        })
     }
     return (
         <>
@@ -50,6 +72,10 @@ export const UserBtn: React.FC<SizeInterface> = ({param}) => {
                                         </Link>
                                     ))
                             }
+                            <a href={"/"} className="setting-item" onClick={handleLogout}>
+                                <img className={"icon"} src={"/static/images/tuichudenglu.png"} alt=""/>
+                                <span className={"name"}>{"退出登录"}</span>
+                            </a>
                         </div> :
                         null
                 }
