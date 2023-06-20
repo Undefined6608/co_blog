@@ -26,12 +26,12 @@ export const CommonComponent: React.FC<CommonComponentProps> = ({history}) => {
     return (
         <>
             <TipComponent/>
-            <HeaderComponent param={{width: "100%", height: "72px"}}/>
+            <HeaderComponent param={{width: "100%", height: "72px",marginTop:'0'}}/>
             {
-                show ? <MenuComponent param={{width: "100%", height: "auto"}} show={show}/>
+                show ? <MenuComponent param={{width: "100%", height: "auto",marginTop:'0'}} show={show}/>
                     : <></>
             }
-            <LoginComponent/>
+            <LoginComponent history={history}/>
         </>
     )
 }

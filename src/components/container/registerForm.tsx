@@ -1,5 +1,5 @@
 import React from "react";
-import "@/sass/container/registerForm.sass";
+import "../../sass/container/registerForm.sass";
 import {
     Button,
     Form,
@@ -7,18 +7,18 @@ import {
     Select
 } from "antd";
 import {formRule, LoginRegExp} from "../../config/rules";
-import {emailOccupy, phoneOccupy, userNameOccupy} from "../../config/api";
+import {emailOccupy, phoneOccupy, register, userNameOccupy} from "../../config/api";
 
 const {Option} = Select;
 
 const formItemLayout = {
     labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 },
+        xs: {span: 24},
+        sm: {span: 4},
     },
     wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 40 },
+        xs: {span: 24},
+        sm: {span: 40},
     },
 };
 
@@ -26,7 +26,23 @@ export const RegisterForm: React.FC = () => {
     const [form] = Form.useForm();
 
     const onFinish = (values: any) => {
-        console.log('Received values of form: ', values);
+        register({
+            username: values.username,
+            password: values.password,
+            phone: values.phone,
+            email: values.email
+        }).then((r) => {
+            console.log(r)
+            if (r.code === 404) return PubSub.publish('openTip', {
+                type: 'warning',
+                msg: {message: "注册失败！", description: r.msg}
+            })
+            if (r.code === 200) return PubSub.publish('openTip', {
+                type: 'success',
+                msg: {message: "注册成功！", description: "请点击上方头像框进行登录！"}
+            })
+        });
+        window.location.reload();
     };
 
     const validatorUserName = (_: any, value: string) => {
@@ -86,7 +102,7 @@ export const RegisterForm: React.FC = () => {
                 validateTrigger={"onBlur"}
             >
                 <Form.Item
-                    name="nickname"
+                    name="username"
                     label="用户名："
                     tooltip="你希望别人怎么称呼你?"
                     rules={[{required: true, message: '用户名不能为空！'},
@@ -95,7 +111,7 @@ export const RegisterForm: React.FC = () => {
                         }
                     ]}
                 >
-                    <Input autoComplete={"username"} />
+                    <Input autoComplete={"username"}/>
                 </Form.Item>
                 <Form.Item
                     name="phone"
@@ -131,7 +147,7 @@ export const RegisterForm: React.FC = () => {
                     rules={formRule.pwd}
                     hasFeedback
                 >
-                    <Input.Password  autoComplete={"new-password"}/>
+                    <Input.Password autoComplete={"new-password"}/>
                 </Form.Item>
 
                 <Form.Item

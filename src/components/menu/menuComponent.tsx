@@ -1,7 +1,8 @@
 import React from "react";
 import {CommonInputBox} from "../common/commonInputBox";
 import {SizeInterface} from "../../config/publicInterface";
-import "@/sass/menu/menuComponent.sass";
+import "../../sass/menu/menuComponent.sass";
+import {ArticleTypeList} from "../article/articleTypeList";
 
 interface MenuComponentParam extends SizeInterface {
     show: boolean
@@ -10,7 +11,8 @@ interface MenuComponentParam extends SizeInterface {
 export const MenuComponent: React.FC<MenuComponentParam> = ({param, show}) => {
     return (
         <div className={show ? "menuComponent showMenu" : "menuComponent"}>
-            <CommonInputBox param={{width: "95%", height: "33px"}}/>
+            <CommonInputBox param={{width: "95%", height: "33px",marginTop:'10px'}}/>
+            <ArticleTypeList state={false} setState={()=>{}} param={{width:"90%",height:'auto',marginTop:'10px'}} />
         </div>
     )
 }

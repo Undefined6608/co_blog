@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import "@/sass/common/commonInputBox.sass";
+import "../../sass/common/commonInputBox.sass";
 import {SizeInterface} from "../../config/publicInterface";
 
 export const CommonInputBox: React.FC<SizeInterface> = ({param}) => {
@@ -25,7 +25,7 @@ export const CommonInputBox: React.FC<SizeInterface> = ({param}) => {
     };
 
     return (
-        <div className="input-box" style={{width: param.width, height: param.height}}>
+        <div className="input-box" style={{width: param.width, height: param.height,marginTop:param.marginTop}}>
             <input type="text" name={"search"} className={"input"} onInput={updateTipShow} value={inputValue} ref={inputRef}
                    placeholder={"Search Documentation..."}/>
             <span className={"input-box-tip"}>{tipShow ? "CTRL K" : "ESC"}</span>

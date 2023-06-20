@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from "react";
-import "@/sass/common/loginComponent.sass";
+import "../../sass/common/loginComponent.sass";
 import PubSub from "pubsub-js";
 import {LoginForm} from "./loginForm";
-export const LoginComponent: React.FC = () => {
+import {BrowserHistory} from "history";
+
+interface LoginComponentParam {
+    history: BrowserHistory
+}
+
+export const LoginComponent: React.FC<LoginComponentParam> = ({history}) => {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -31,7 +37,7 @@ export const LoginComponent: React.FC = () => {
                             <div className="loginLogo">
                                 Co-Blog
                             </div>
-                            <LoginForm/>
+                            <LoginForm history={history}/>
                         </div>
                     </div> :
                     null

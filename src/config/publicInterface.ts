@@ -1,7 +1,8 @@
 export interface SizeInterface {
     param: {
         width: string,
-        height: string
+        height: string,
+        marginTop:string
     }
 }
 
@@ -30,4 +31,28 @@ export interface UserSettingInterface {
     icon: string,
     name: string,
     href: string
+}
+
+
+export interface ArticleTypeInterface {
+    code: number,
+    msg: string,
+    data: {
+        articleTypeList: [
+            {
+                id: number,
+                root_id: number,
+                type_name: string,
+                type_visible: number,
+                picture:string
+            }
+        ]
+    }
+}
+
+export interface ArticleTypeItemInterface{
+    id: number,
+    root_id: number,
+    type_name: string,
+    type_visible: number
 }

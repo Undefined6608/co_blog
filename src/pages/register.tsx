@@ -1,6 +1,6 @@
 import React from "react";
 import {RegisterForm} from "../components/container/registerForm";
-import "@/sass/pages/register.sass";
+import "../sass/pages/register.sass";
 export const Register:React.FC = () => {
     return(
         <div className={"register"}>

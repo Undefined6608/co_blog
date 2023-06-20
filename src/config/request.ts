@@ -63,6 +63,6 @@ export const loginSuccess = () => {
 export const loginFail = (r: any) => {
     PubSub.publish('openTip', {
         type: 'warning',
-        msg: {message: "登录失败：", description: r.data.msg}
+        msg: {message: "登录失败：", description: r.msg}
     })
 }

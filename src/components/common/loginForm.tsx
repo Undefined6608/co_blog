@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import "@/sass/common/loginForm.sass";
+import "../../sass/common/loginForm.sass";
 import {Button, Checkbox, Form, Input} from "antd";
 import {LockOutlined, UserOutlined} from "@ant-design/icons";
 import {formRule, LoginRegExp} from "../../config/rules";
@@ -7,8 +7,13 @@ import {emailLogin, phoneLogin} from "../../config/api";
 import PubSub from "pubsub-js";
 import {loginFail, loginSuccess} from "../../config/request";
 import {Link} from "react-router-dom";
+import {BrowserHistory} from "history";
 
-export const LoginForm: React.FC = () => {
+interface LoginFormParam {
+    history: BrowserHistory
+}
+
+export const LoginForm: React.FC<LoginFormParam> = ({history}) => {
     const [tips, setTips] = useState("");
     const onFinish = (values: any) => {
         if (!values.remember) return setTips("请勾选-同意用户协议")
@@ -18,7 +23,11 @@ export const LoginForm: React.FC = () => {
             phoneLogin({
                 phone: values.username, password: values.password, remember: 1
             }).then((r) => {
-                if (r.code === 200) return loginSuccess();
+                if (r.code === 200) {
+                    history.replace('/');
+                    loginSuccess();
+                    return;
+                }
                 if (r.code === 404) return loginFail(r);
             })
         }

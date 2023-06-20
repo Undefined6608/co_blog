@@ -1,5 +1,5 @@
 import {get, post} from "./request";
-import {BaseInterface, UserInfoInterface} from "./publicInterface";
+import {ArticleTypeInterface, BaseInterface, UserInfoInterface} from "./publicInterface";
 import PubSub from "pubsub-js";
 
 export const userNameOccupy = async ({username}: { username: string }) => {
@@ -38,9 +38,26 @@ export const register = async ({
                                    phone,
                                    email
                                }: { username: string, password: string, phone: string, email: string }) => {
-    return await new Promise<BaseInterface>((resolve, reject)=>{
-        post<BaseInterface>('/user/register',{username:username,password:password,})
-    })
+    return await new Promise<BaseInterface>((resolve, reject) => {
+        post<BaseInterface>('/user/register', {
+            username: username,
+            password: password,
+            phone: phone,
+            email: email
+        }).then((r) => {
+            if (r.status !== 200) return PubSub.publish('openTip', {
+                type: 'error',
+                msg: {message: "请求失败", description: ""}
+            })
+            return resolve(r.data)
+        }).catch((e) => {
+            PubSub.publish('openTip', {
+                type: 'error',
+                msg: {message: "请求失败", description: e.msg}
+            })
+            return reject(e)
+        })
+    });
 }
 
 export const phoneLogin = async ({
@@ -122,3 +139,32 @@ export const logout = async () => {
         })
     })
 }
+
+/***************************************************文章********************************************************************/
+export const getArticleType = () => {
+    return new Promise<ArticleTypeInterface>((resolve, reject) => {
+        get<ArticleTypeInterface>('/article/getArticleType').then(r => {
+            if (r.status !== 200) return PubSub.publish('openTip', {
+                type: 'error',
+                msg: {message: "请求失败", description: ""}
+            })
+            return resolve(r.data);
+        }).catch(e => {
+            PubSub.publish('openTip', {
+                type: 'error',
+                msg: {message: "请求失败", description: e.msg}
+            })
+            return reject(e)
+        })
+    })
+}
+
+
+
+
+
+
+
+
+
+

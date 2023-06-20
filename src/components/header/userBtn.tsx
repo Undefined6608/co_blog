@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "@/sass/header/userBtn.sass";
+import "../../sass/header/userBtn.sass";
 import {SizeInterface, UserInfoInterface} from "../../config/publicInterface";
 import {userSettingList} from "../../utils/staticData";
 import {Link} from "react-router-dom";
@@ -49,7 +49,7 @@ export const UserBtn: React.FC<SizeInterface> = ({param}) => {
     }
     return (
         <>
-            <div className={"user-btn"} style={{width: param.width, height: param.height}}>
+            <div className={"user-btn"} style={{width: param.width, height: param.height,marginTop:param.marginTop}}>
                 {userInfo ?
                     <img className={"user-icon"} onClick={login} src={userInfo.data.head_sculpture} alt=""/> :
                     <LoginOutlined className={"user-icon"} style={{fontSize: '24px'}} onClick={login}/>
