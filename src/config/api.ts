@@ -1,6 +1,13 @@
 import {get, post} from "./request";
-import {ArticleTypeInterface, BaseInterface, UserInfoInterface} from "./publicInterface";
+import {ArticleListInterface, ArticleTypeInterface, BaseInterface, UserInfoInterface} from "./publicInterface";
 import PubSub from "pubsub-js";
+
+const requestError = (e: any) => {
+    PubSub.publish('openTip', {
+        type: 'error',
+        msg: {message: "请求失败", description: e.msg}
+    })
+}
 
 export const userNameOccupy = async ({username}: { username: string }) => {
     return await new Promise<BaseInterface>((resolve, reject) => {
@@ -45,17 +52,10 @@ export const register = async ({
             phone: phone,
             email: email
         }).then((r) => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data)
         }).catch((e) => {
-            PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: e.msg}
-            })
-            return reject(e)
+            return requestError(e);
         })
     });
 }
@@ -67,17 +67,10 @@ export const phoneLogin = async ({
                                  }: { phone: string, password: string, remember: number }) => {
     return await new Promise<BaseInterface>((resolve, reject) => {
         post<BaseInterface>('/user/phoneLogin', {phone: phone, password: password, remember: remember}).then((r) => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data)
         }).catch((e) => {
-            PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: e.msg}
-            })
-            return reject(e)
+            return requestError(e);
         })
     });
 }
@@ -89,17 +82,10 @@ export const emailLogin = async ({
                                  }: { email: string, password: string, remember: number }) => {
     return await new Promise<BaseInterface>((resolve, reject) => {
         post<BaseInterface>('/user/emailLogin', {email: email, password: password, remember: remember}).then((r) => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data)
         }).catch((e) => {
-            PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: e.msg}
-            })
-            return reject(e)
+            return requestError(e);
         })
     });
 }
@@ -107,17 +93,10 @@ export const emailLogin = async ({
 export const getUserInfo = async () => {
     return await new Promise<UserInfoInterface>((resolve, reject) => {
         get<UserInfoInterface>('/user/userInfo').then((r) => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data);
         }).catch((e) => {
-            PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: e.msg}
-            })
-            return reject(e)
+            return requestError(e);
         })
     })
 }
@@ -125,17 +104,10 @@ export const getUserInfo = async () => {
 export const logout = async () => {
     return new Promise<BaseInterface>((resolve, reject) => {
         post<BaseInterface>('/user/logout').then(r => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data);
         }).catch(e => {
-            PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: e.msg}
-            })
-            return reject(e)
+            return requestError(e);
         })
     })
 }
@@ -144,17 +116,21 @@ export const logout = async () => {
 export const getArticleType = () => {
     return new Promise<ArticleTypeInterface>((resolve, reject) => {
         get<ArticleTypeInterface>('/article/getArticleType').then(r => {
-            if (r.status !== 200) return PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: ""}
-            })
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data);
         }).catch(e => {
-            PubSub.publish('openTip', {
-                type: 'error',
-                msg: {message: "请求失败", description: e.msg}
-            })
-            return reject(e)
+            return requestError(e);
+        })
+    })
+}
+
+export const getArticleList = (typeId:number) => {
+    return new Promise<ArticleListInterface>((resolve, reject) => {
+        get<ArticleListInterface>(`/article/getArticleList?typeId=${typeId}`).then(r => {
+            if (r.status !== 200) return requestError(r);
+            return resolve(r.data);
+        }).catch(e => {
+            return requestError(e);
         })
     })
 }

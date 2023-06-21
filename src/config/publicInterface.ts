@@ -2,7 +2,7 @@ export interface SizeInterface {
     param: {
         width: string,
         height: string,
-        marginTop:string
+        marginTop: string
     }
 }
 
@@ -12,9 +12,7 @@ export interface BaseInterface {
     data: {}
 }
 
-export interface UserInfoInterface {
-    code: number,
-    msg: string,
+export interface UserInfoInterface extends BaseInterface {
     data: {
         username: string,
         head_sculpture: string,// 用户头像
@@ -34,9 +32,7 @@ export interface UserSettingInterface {
 }
 
 
-export interface ArticleTypeInterface {
-    code: number,
-    msg: string,
+export interface ArticleTypeInterface extends BaseInterface {
     data: {
         articleTypeList: [
             {
@@ -44,15 +40,23 @@ export interface ArticleTypeInterface {
                 root_id: number,
                 type_name: string,
                 type_visible: number,
-                picture:string
+                picture: string
             }
         ]
     }
 }
 
-export interface ArticleTypeItemInterface{
+export interface ArticleItemInterface {
     id: number,
-    root_id: number,
-    type_name: string,
-    type_visible: number
+    userName: string,
+    read: number,
+    title: string,
+    context: string,
+    date: string
+}
+
+export interface ArticleListInterface extends BaseInterface {
+    data: {
+        articleList: ArticleItemInterface[]
+    }
 }

@@ -1,4 +1,4 @@
-import {ArticleTypeList} from "../article/articleTypeList";
+import {ArticleTypeList} from "../container/articleTypeList";
 import React, {useState} from "react";
 import {SizeInterface} from "../../config/publicInterface";
 import "../../sass/common/articleType.sass";

@@ -8,6 +8,7 @@ import {
 } from "antd";
 import {formRule, LoginRegExp} from "../../config/rules";
 import {emailOccupy, phoneOccupy, register, userNameOccupy} from "../../config/api";
+import PubSub from "pubsub-js";
 
 const {Option} = Select;
 
@@ -37,12 +38,17 @@ export const RegisterForm: React.FC = () => {
                 type: 'warning',
                 msg: {message: "注册失败！", description: r.msg}
             })
-            if (r.code === 200) return PubSub.publish('openTip', {
-                type: 'success',
-                msg: {message: "注册成功！", description: "请点击上方头像框进行登录！"}
-            })
+            if (r.code === 200) {
+                PubSub.publish('openTip', {
+                    type: 'success',
+                    msg: {message: "注册成功！", description: ""}
+                })
+                setTimeout(()=>{
+                    PubSub.publish('loginStatus', true);
+                },500);
+                return;
+            }
         });
-        window.location.reload();
     };
 
     const validatorUserName = (_: any, value: string) => {

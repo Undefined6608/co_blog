@@ -1,16 +1,18 @@
-.menuComponent
-  width: 100%
-  display: flex
-  flex-direction: column
-  align-items: center
-  z-index: 2
-  position: relative
-  background: #ffffff
-
-.showMenu
-  min-height: calc(100vh - 72px)
-  height: auto
-
-@media (min-width: 780px)
+@at-root
   .menuComponent
-    display: none
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    z-index: 2
+    position: absolute
+    top: 72px
+    background: #ffffff
+
+  .showMenu
+    min-height: calc(100vh - 72px)
+    height: auto
+
+  @media (min-width: 780px)
+    .menuComponent
+      display: none

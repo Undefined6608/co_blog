@@ -4,18 +4,16 @@ import {TipComponent} from "./tipComponent";
 import HeaderComponent from "../header/headerComponent";
 import {MenuComponent} from "../menu/menuComponent";
 import {LoginComponent} from "./loginComponent";
-import {BrowserHistory} from "history";
+import {ArticleType} from "./articleType";
+import {historyPush} from "../../config/historyConfig";
 
-interface CommonComponentProps {
-    history: BrowserHistory;
-}
 
-export const CommonComponent: React.FC<CommonComponentProps> = ({history}) => {
+export const CommonComponent: React.FC = () => {
     const [show, setShow] = useState(false);
     useEffect(() => {
         const pubSubToken = PubSub.subscribe('menuShow', (_, val) => setShow(val));
         const historyToken = PubSub.subscribe('history', (_, val) => {
-            history.push(val.path);
+            historyPush(val.path,{});
             window.location.reload();
         })
         return () => {
@@ -31,7 +29,8 @@ export const CommonComponent: React.FC<CommonComponentProps> = ({history}) => {
                 show ? <MenuComponent param={{width: "100%", height: "auto",marginTop:'0'}} show={show}/>
                     : <></>
             }
-            <LoginComponent history={history}/>
+            <LoginComponent/>
+            <ArticleType param={{width:'auto',height:'auto',marginTop:'0'}} />
         </>
     )
 }

@@ -2,7 +2,7 @@ import React from "react";
 import {CommonInputBox} from "../common/commonInputBox";
 import {SizeInterface} from "../../config/publicInterface";
 import "../../sass/menu/menuComponent.sass";
-import {ArticleTypeList} from "../article/articleTypeList";
+import {ArticleTypeList} from "../container/articleTypeList";
 
 interface MenuComponentParam extends SizeInterface {
     show: boolean

@@ -1,11 +1,11 @@
 import React from "react";
-import {ContainerComponent} from "../components/container/containerComponent";
+import "../sass/pages/commonPages.sass";
+import "../sass/pages/home.sass";
 
 export const Home:React.FC = () => {
 
     return (
-        <>
-            <ContainerComponent />
-        </>
+        <div className={"commonPages home"}>
+        </div>
     )
 }

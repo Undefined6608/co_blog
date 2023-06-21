@@ -1,17 +1,19 @@
-.articleType
-  width: auto
-  height: auto
-  display: flex
-  flex-wrap: wrap
-  align-items: center
-  justify-content: center
-
-  .childShow
-    width: 30px
-    height: 30px
-    background: #ffffff
-    border: 0
-
-@media (max-width: 780px)
+@at-root
   .articleType
-    display: none
+    width: auto
+    height: auto
+    min-height: calc(100vh - 72px)
+    display: flex
+    flex-wrap: wrap
+    align-items: center
+    justify-content: center
+
+    .childShow
+      width: 30px
+      height: 30px
+      background: #ffffff
+      border: 0
+
+  @media (max-width: 780px)
+    .articleType
+      display: none

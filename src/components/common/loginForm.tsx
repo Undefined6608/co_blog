@@ -7,13 +7,9 @@ import {emailLogin, phoneLogin} from "../../config/api";
 import PubSub from "pubsub-js";
 import {loginFail, loginSuccess} from "../../config/request";
 import {Link} from "react-router-dom";
-import {BrowserHistory} from "history";
+import {historyReplace} from "../../config/historyConfig";
 
-interface LoginFormParam {
-    history: BrowserHistory
-}
-
-export const LoginForm: React.FC<LoginFormParam> = ({history}) => {
+export const LoginForm: React.FC = () => {
     const [tips, setTips] = useState("");
     const onFinish = (values: any) => {
         if (!values.remember) return setTips("请勾选-同意用户协议")
@@ -24,7 +20,7 @@ export const LoginForm: React.FC<LoginFormParam> = ({history}) => {
                 phone: values.username, password: values.password, remember: 1
             }).then((r) => {
                 if (r.code === 200) {
-                    history.replace('/');
+                    historyReplace('/',{});
                     loginSuccess();
                     return;
                 }
