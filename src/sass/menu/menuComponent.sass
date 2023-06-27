@@ -5,13 +5,17 @@
     flex-direction: column
     align-items: center
     z-index: 2
-    position: absolute
+    position: fixed
     top: 72px
+    overflow-y: scroll
     background: #ffffff
 
   .showMenu
     min-height: calc(100vh - 72px)
     height: auto
+
+  .menuComponent::-webkit-scrollbar
+    display: none /* 设置滚动条宽度 */
 
   @media (min-width: 780px)
     .menuComponent

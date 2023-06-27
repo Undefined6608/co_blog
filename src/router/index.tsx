@@ -1,5 +1,5 @@
 // 引入React-Router
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 // 引入组件
 import {Home} from "../pages/Home";
 import {CommonComponent} from "../components/common/commonComponent";
@@ -8,11 +8,12 @@ import {Register} from "../pages/register";
 import {Forget} from "../pages/forget";
 import {Article} from "../pages/article";
 import {ArticleList} from "../pages/articleList";
+import {EditArticle} from "../pages/editArticle";
 
 export const AppRouter = () => {
 
     return (
-        <Router>
+        <BrowserRouter>
             <CommonComponent/>
             <Routes>
                 <Route path={'/'} element={<Home/>}/>
@@ -20,7 +21,8 @@ export const AppRouter = () => {
                 <Route path={'/forget'} element={<Forget/>}/>
                 <Route path={'/articleList'} element={<ArticleList/>}/>
                 <Route path={'/article'} element={<Article/>}/>
+                <Route path={'editArticle'} element={<EditArticle/>}/>
             </Routes>
-        </Router>
+        </BrowserRouter>
     )
 }

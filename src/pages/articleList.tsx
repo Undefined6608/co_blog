@@ -5,26 +5,45 @@ import {ArticleListInterface} from "../config/publicInterface";
 import {getArticleList} from "../config/api";
 import {useLocation} from "react-router-dom";
 import {ArticleItem} from "../components/container/articleItem";
-import {NotFront} from "../components/container/notFront";
+import {Divider, Empty, Spin} from "antd";
+import {AnimatePresence} from "framer-motion";
 
 export const ArticleList: React.FC = () => {
     const [articleList, setArticleList] = useState<ArticleListInterface>();
-    const typeId = useLocation().state;
+    const [loading, setLoading] = useState(true);
+    const {state} = useLocation();
+    // console.log(state.typeId);
     useEffect(() => {
-        getArticleList(typeId.typeId).then((r) => {
-            if (r.code !== 200) return;
+        setLoading(true);
+        getArticleList(state.typeId).then((r) => {
+            // console.log(r)
+            if (r.code !== 200) return setArticleList(undefined);
             setArticleList(r);
+        }).finally(() => {
+            setLoading(false);
         })
-    }, [typeId])
+    }, [state.typeId])
     return (
         <div className={"commonPages articleList"}>
             {
-                articleList ?
-                    articleList.data.articleList.map((item) => (
-                        <ArticleItem param={{width: "100%", height: "40px", marginTop: "10px"}} data={item}/>
-                    )) :
-                    <NotFront param={{width:"100%",height:"100%",marginTop:"0"}} fontSize={"16px"} />
+                !loading ?
+                    articleList?.data.articleList.length ?
+                        <ul style={{width:'100%'}}>
+                            <AnimatePresence mode={"sync"}>
+                                {
+                                    articleList.data.articleList.map((item) => (
+                                        <ArticleItem key={item.id}
+                                                     param={{width: "100%", height: "80px", marginTop: "0"}}
+                                                     data={item}/>
+                                    ))
+                                }
+                            </AnimatePresence>
+                            <Divider>暂无更多</Divider>
+                        </ul> :
+                        <Empty description={"暂无数据"}/> :
+                    <Spin spinning={loading} size={"large"} children={"正在玩命加载中···"}/>
             }
+
         </div>
     )
 }

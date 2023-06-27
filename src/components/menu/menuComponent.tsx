@@ -10,9 +10,11 @@ interface MenuComponentParam extends SizeInterface {
 
 export const MenuComponent: React.FC<MenuComponentParam> = ({param, show}) => {
     return (
-        <div className={show ? "menuComponent showMenu" : "menuComponent"}>
-            <CommonInputBox param={{width: "95%", height: "33px",marginTop:'10px'}}/>
-            <ArticleTypeList state={false} setState={()=>{}} param={{width:"90%",height:'auto',marginTop:'10px'}} />
+        <div className={show ? "menuComponent showMenu" : "menuComponent"}
+             style={{width: param.width, height: param.height, marginTop: param.marginTop}}>
+            <CommonInputBox param={{width: "95%", height: "33px", marginTop: '10px'}}/>
+            <ArticleTypeList state={false} setState={() => {
+            }} param={{width: "90%", height: 'auto', marginTop: '10px'}}/>
         </div>
     )
 }

@@ -24,6 +24,14 @@ export interface UserInfoInterface extends BaseInterface {
     }
 }
 
+export interface UploadImgInterface extends BaseInterface{
+    data:[
+        {
+            url:string
+        }
+    ]
+}
+
 export interface UserSettingInterface {
     id: string,
     icon: string,
@@ -52,11 +60,24 @@ export interface ArticleItemInterface {
     read: number,
     title: string,
     context: string,
-    date: string
+    date: string,
+    icon: string
 }
 
 export interface ArticleListInterface extends BaseInterface {
     data: {
         articleList: ArticleItemInterface[]
+    }
+}
+
+export interface ArticleMsgInterface extends BaseInterface {
+    data: {
+        id: number,
+        userName: string,
+        read: number,
+        title: string,
+        context: string,
+        date: string,
+        icon: string
     }
 }

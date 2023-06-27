@@ -1,6 +1,12 @@
 import {get, post} from "./request";
-import {ArticleListInterface, ArticleTypeInterface, BaseInterface, UserInfoInterface} from "./publicInterface";
+import {
+    ArticleListInterface, ArticleMsgInterface,
+    ArticleTypeInterface,
+    BaseInterface, UploadImgInterface,
+    UserInfoInterface
+} from "./publicInterface";
 import PubSub from "pubsub-js";
+import axios from "axios";
 
 const requestError = (e: any) => {
     PubSub.publish('openTip', {
@@ -124,7 +130,7 @@ export const getArticleType = () => {
     })
 }
 
-export const getArticleList = (typeId:number) => {
+export const getArticleList = (typeId: number) => {
     return new Promise<ArticleListInterface>((resolve, reject) => {
         get<ArticleListInterface>(`/article/getArticleList?typeId=${typeId}`).then(r => {
             if (r.status !== 200) return requestError(r);
@@ -135,6 +141,54 @@ export const getArticleList = (typeId:number) => {
     })
 }
 
+export const getArticleMsg = (articleId: number) => {
+    return new Promise<ArticleMsgInterface>((resolve, reject) => {
+        get<ArticleMsgInterface>(`/article/getArticleMsg?articleId=${articleId}`).then(r => {
+            if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+            return resolve(r.data);
+        }).catch(e => {
+            return requestError(e);
+        })
+    })
+}
+
+export const updateImg = async (files: Array<File>) => {
+    return Promise.all<UploadImgInterface>(
+        files.map((file) => {
+            return new Promise((rev, rej) => {
+                const form = new FormData();
+                form.append('image', file);
+                axios
+                    .post<UploadImgInterface>('/api/upload/img', form, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    })
+                    .then((res) => {
+                        if (res.status !== 200 && res.data.code !== 200) return rej(res)
+                        return rev(res.data)
+                    })
+                    .catch((error) => rej(error));
+            });
+        })
+    );
+}
+
+export const addArticle = ({type, title, html, icon}: { type: number, title: string, html: string, icon: string }) => {
+    return new Promise<BaseInterface>((resolve, reject) => {
+        post<BaseInterface>(`/article/addArticle`, {
+            articleType:type,
+            articleTitle:title,
+            articleContext:html,
+            icon:icon
+        }).then(r => {
+            if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+            return resolve(r.data);
+        }).catch(e => {
+            return requestError(e);
+        })
+    })
+}
 
 
 

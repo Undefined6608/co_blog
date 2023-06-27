@@ -1,19 +1,24 @@
-@at-root
+.articleType
+  min-height: calc(100vh - 72px)
+  display: flex
+  flex-wrap: wrap
+  position: sticky
+  top: 72px
+  justify-content: center
+  overflow-y: scroll
+
+  .childShow
+    width: 30px
+    height: 30px
+    background: #ffffff
+    border: 0
+    position: relative
+    top: 300px
+
+.articleType::-webkit-scrollbar
+  display: none
+
+@media (max-width: 780px)
   .articleType
-    width: auto
-    height: auto
-    min-height: calc(100vh - 72px)
-    display: flex
-    flex-wrap: wrap
-    align-items: center
-    justify-content: center
-
-    .childShow
-      width: 30px
-      height: 30px
-      background: #ffffff
-      border: 0
-
-  @media (max-width: 780px)
-    .articleType
-      display: none
+    display: none
+    top: 100px

@@ -3,7 +3,7 @@ import {Menu, MenuProps} from "antd";
 import {ArticleTypeInterface, SizeInterface} from "../../config/publicInterface";
 import "../../sass/common/articleTypeList.sass";
 import {getArticleType} from "../../config/api";
-import {historyReplace} from "../../config/historyConfig";
+import {useNavigate} from "react-router-dom";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -30,8 +30,8 @@ interface ChildProps extends SizeInterface {
 
 export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) => {
     const [items, setItems] = useState<MenuItem[]>([]);
-    const [selectStatus,setSelectStatus] = useState<string>('3');
-
+    const [selectStatus, setSelectStatus] = useState<string>('');
+    const history = useNavigate();
     useEffect(() => {
 
         const generateMenuItems = (data: ArticleTypeInterface, rootId = 0): MenuItem[] => {
@@ -39,13 +39,12 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
                 .filter((item) => item.root_id === rootId)
                 .map((item) => {
                     const children = generateMenuItems(data, item.id);
-                    if (children.length > 0) {
-                        return getItem(item.type_name, item.id, <img className={"icon"} width={"16px"}
-                                                                     src={item.picture} alt={''}/>, children);
-                    } else {
-                        return getItem(item.type_name, item.id, <img className={"icon"} width={"16px"}
-                                                                     src={item.picture} alt={''}/>);
-                    }
+                    if (children.length > 0) return getItem(item.type_name, item.id, <img className={"icon"}
+                                                                                          width={"16px"}
+                                                                                          src={item.picture}
+                                                                                          alt={''}/>, children);
+                    return getItem(item.type_name, item.id, <img className={"icon"} width={"16px"}
+                                                                 src={item.picture} alt={''}/>);
                 });
         };
 
@@ -53,14 +52,12 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
             if (r.code !== 200) return;
             const updatedItems = generateMenuItems(r);
             setItems(updatedItems);
-        }).catch((e) => {
-
         })
     }, []);
     const selectHandler = (ev: any) => {
-        console.log(ev)
+        // console.log(ev)
         setSelectStatus(ev.key);
-        historyReplace('/articleList', {typeId: ev.key * 1});
+        history('/articleList', {state: {typeId: ev.key * 1}})
     }
     return (
         <div className={"articleTypeList"}

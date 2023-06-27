@@ -6,11 +6,11 @@ import {formRule, LoginRegExp} from "../../config/rules";
 import {emailLogin, phoneLogin} from "../../config/api";
 import PubSub from "pubsub-js";
 import {loginFail, loginSuccess} from "../../config/request";
-import {Link} from "react-router-dom";
-import {historyReplace} from "../../config/historyConfig";
+import {Link, useNavigate} from "react-router-dom";
 
 export const LoginForm: React.FC = () => {
     const [tips, setTips] = useState("");
+    const history = useNavigate();
     const onFinish = (values: any) => {
         if (!values.remember) return setTips("请勾选-同意用户协议")
         if (LoginRegExp.illegal.test(values.username) || LoginRegExp.illegal.test(values.password)) return setTips("数据中含有非法字符！");
@@ -20,7 +20,7 @@ export const LoginForm: React.FC = () => {
                 phone: values.username, password: values.password, remember: 1
             }).then((r) => {
                 if (r.code === 200) {
-                    historyReplace('/',{});
+                    history('/',{});
                     loginSuccess();
                     return;
                 }
@@ -34,9 +34,6 @@ export const LoginForm: React.FC = () => {
             })
         }
     };
-    const linkGet = (url: string) => {
-        PubSub.publish('history', {path: url});
-    }
 
     return (
         <>
@@ -70,10 +67,16 @@ export const LoginForm: React.FC = () => {
                         </Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="link" htmlType="button" onClick={() => linkGet('/forget')}>
+                        <Button type="link" htmlType="button" onClick={() => {
+                            PubSub.publish('loginStatus',false);
+                            history('/forget',{});
+                        }}>
                             忘记密码
                         </Button>
-                        <Button type="link" htmlType="button" onClick={() => linkGet('/register')}>
+                        <Button type="link" htmlType="button" onClick={() => {
+                            PubSub.publish('loginStatus',false);
+                            history('/register',{});
+                        }}>
                             注册
                         </Button>
                     </Form.Item>
