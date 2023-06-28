@@ -3,6 +3,7 @@ import {ArticleItemInterface, SizeInterface} from "../../config/publicInterface"
 import "../../sass/container/articleItem.sass";
 import {useNavigate} from "react-router-dom";
 import {motion} from "framer-motion"
+import {addRead} from "../../config/api";
 
 interface ArticleItemParam extends SizeInterface {
     data: ArticleItemInterface
@@ -11,6 +12,8 @@ interface ArticleItemParam extends SizeInterface {
 export const ArticleItem: React.FC<ArticleItemParam> = ({param, data}) => {
     const history = useNavigate();
     const handlerArticle = () => {
+        addRead(data.id).then((r) => {
+        })
         history('/article', {state: {articleId: data.id}});
     }
     return (

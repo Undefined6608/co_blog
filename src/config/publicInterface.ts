@@ -24,10 +24,10 @@ export interface UserInfoInterface extends BaseInterface {
     }
 }
 
-export interface UploadImgInterface extends BaseInterface{
-    data:[
+export interface UploadImgInterface extends BaseInterface {
+    data: [
         {
-            url:string
+            url: string
         }
     ]
 }
@@ -80,4 +80,17 @@ export interface ArticleMsgInterface extends BaseInterface {
         date: string,
         icon: string
     }
+}
+
+export interface CommitsInterface extends BaseInterface {
+    data: [
+        {
+            user_name: string,
+            integral: number,
+            member: number,
+            head_sculpture: string,
+            id: number,
+            context: string,
+        }
+    ]
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import "../../sass/header/userBtn.sass";
 import {SizeInterface, UserInfoInterface} from "../../config/publicInterface";
 import {userSettingList} from "../../utils/staticData";
@@ -10,13 +10,23 @@ import Cookies from "js-cookie";
 
 export const UserBtn: React.FC<SizeInterface> = ({param}) => {
     const [userInfo, setUserInfo] = useState<UserInfoInterface | null>(null);
-    useEffect(() => {
-        // 获取个人信息
+    const getInfo = useCallback(() => {
         getUserInfo().then((r) => {
             // console.log(r.data)
             if (r.code === 200) return setUserInfo(r);
         })
     }, []);
+    useEffect(() => {
+        // 获取个人信息
+        getInfo();
+        const loginInfoToken = PubSub.subscribe('getLoginInfo', (_, val: boolean) => {
+            val ? getInfo() : setUserInfo(null);
+        })
+
+        return () => {
+            PubSub.unsubscribe(loginInfoToken);
+        }
+    }, [getInfo]);
     // 打开登录组件
     const login = () => {
         if (userInfo) return;
@@ -33,9 +43,9 @@ export const UserBtn: React.FC<SizeInterface> = ({param}) => {
                     type: 'success',
                     msg: {message: "退出成功！", description: ""}
                 })
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+                PubSub.publish('getLoginInfo', false);
+                PubSub.publish('commitLoginStatus', false);
+                setUserInfo(null);
                 return;
             }
             if (r.code === 404) {
@@ -49,7 +59,7 @@ export const UserBtn: React.FC<SizeInterface> = ({param}) => {
     }
     return (
         <>
-            <div className={"user-btn"} style={{width: param.width, height: param.height,marginTop:param.marginTop}}>
+            <div className={"user-btn"} style={{width: param.width, height: param.height, marginTop: param.marginTop}}>
                 {userInfo ?
                     <img className={"user-icon"} onClick={login} src={userInfo.data.head_sculpture} alt=""/> :
                     <LoginOutlined className={"user-icon"} style={{fontSize: '24px'}} onClick={login}/>

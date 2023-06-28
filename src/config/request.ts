@@ -23,7 +23,7 @@ function request<T>(
     return axios({
         baseURL: '/api',
         withCredentials: true,
-        headers:{"Content-Type":"application/json"},
+        headers: {"Content-Type": "application/json"},
         method,
         url,
         data,
@@ -55,9 +55,9 @@ export const loginSuccess = () => {
         type: 'success',
         msg: {message: "登录成功！", description: ""}
     })
-    setTimeout(() => {
-        window.location.reload();
-    }, 1000);
+    PubSub.publish('getLoginInfo', true);
+    PubSub.publish('loginStatus', false);
+    PubSub.publish('commitLoginStatus', true);
 }
 
 export const loginFail = (r: any) => {

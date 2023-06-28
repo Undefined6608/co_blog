@@ -2,17 +2,24 @@ import React, {useEffect, useState} from "react";
 import "../sass/pages/editArticle.sass";
 import {EditComponent} from "../components/common/editComponent";
 import {Input, Select} from "antd";
-import {getArticleType} from "../config/api";
+import {getArticleType, getUserInfo} from "../config/api";
 import PubSub from "pubsub-js";
 import type {UploadProps} from 'antd';
 import {Button, message, Upload} from 'antd';
 import {UploadOutlined} from "@ant-design/icons";
+import {useNavigate} from "react-router-dom";
 
 export const EditArticle: React.FC = () => {
     const [typeList, setTypeList] = useState<Array<{ value: number, label: string }>>();
     const [type, setType] = useState(0);
     const [title, setTitle] = useState('');
+    const history = useNavigate();
     const [icon, setIcon] = useState('http://39.101.72.168:81/image/icon.jpg');
+
+    getUserInfo().then((r) => {
+        if (r.code !== 200) return history('/');
+        if (r.data.limits !== 0 && r.data.limits !== 1) return history('/');
+    })
 
     const props: UploadProps = {
         name: 'image',

@@ -7,23 +7,28 @@ import {CommonInputBox} from "../common/commonInputBox";
 import {HeaderMenu} from "./headerMenu";
 import {SizeInterface} from "../../config/publicInterface";
 import {UserBtn} from "./userBtn";
-const HeaderComponent: React.FC<SizeInterface> = ({param}) => {
+
+interface HeaderComponentParam extends SizeInterface {
+    menuShow: boolean
+}
+
+const HeaderComponent: React.FC<HeaderComponentParam> = ({param,menuShow}) => {
 
     return (
-        <div className={"headerBox"} style={{width: param.width, height: param.height,marginTop:param.marginTop}}>
+        <div className={"headerBox"} style={{width: param.width, height: param.height, marginTop: param.marginTop}}>
             <div className="header">
                 <div className="header-left">
                     <Link to={'/'} className={"logo"}>Co-Blog</Link>
                 </div>
                 <div className="header-right">
                     <Link to={"/"} className={"btn-list"}>Home</Link>
-                    <Link to={"/"} className={"btn-list"}>About</Link>
-                    <CommonInputBox param={{width: "256px", height: "33px",marginTop:'0'}}/>
+                    <Link to={"/about"} className={"btn-list"}>About</Link>
+                    <CommonInputBox param={{width: "256px", height: "33px", marginTop: '0'}}/>
                     <div className="icon-item">
                         <img src="/static/images/github.png" alt=""/>
                     </div>
-                    <UserBtn param={{width:"24px", height:"72px",marginTop:'0'}} />
-                    <HeaderMenu param={{width: "24px", height: "24px",marginTop:'0'}}/>
+                    <UserBtn param={{width: "24px", height: "72px", marginTop: '0'}}/>
+                    <HeaderMenu param={{width: "24px", height: "24px", marginTop: '0'}} menuShow={menuShow}/>
                 </div>
             </div>
         </div>

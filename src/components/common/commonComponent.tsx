@@ -10,7 +10,7 @@ import {ArticleType} from "./articleType";
 export const CommonComponent: React.FC = () => {
     const [show, setShow] = useState(false);
     useEffect(() => {
-        const pubSubToken = PubSub.subscribe('menuShow', (_, val) => setShow(val));
+        const pubSubToken = PubSub.subscribe('menuShow', (_, val: boolean) => setShow(val));
         return () => {
             PubSub.unsubscribe(pubSubToken);
         }
@@ -18,9 +18,10 @@ export const CommonComponent: React.FC = () => {
     return (
         <>
             <TipComponent/>
-            <HeaderComponent param={{width: "100%", height: "72px", marginTop: '0'}}/>
+            <HeaderComponent param={{width: "100%", height: "72px", marginTop: '0'}} menuShow={show}/>
             {
-                show ? <MenuComponent param={{width: "100%", height: "calc(100vh - 72px)", marginTop: '0'}} show={show}/>
+                show ? <MenuComponent param={{width: "100%", height: "calc(100vh - 72px)", marginTop: '0'}}
+                                      showParam={show}/>
                     : <></>
             }
             <LoginComponent/>

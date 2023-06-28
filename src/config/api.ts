@@ -2,7 +2,7 @@ import {get, post} from "./request";
 import {
     ArticleListInterface, ArticleMsgInterface,
     ArticleTypeInterface,
-    BaseInterface, UploadImgInterface,
+    BaseInterface, CommitsInterface, UploadImgInterface,
     UserInfoInterface
 } from "./publicInterface";
 import PubSub from "pubsub-js";
@@ -177,12 +177,50 @@ export const updateImg = async (files: Array<File>) => {
 export const addArticle = ({type, title, html, icon}: { type: number, title: string, html: string, icon: string }) => {
     return new Promise<BaseInterface>((resolve, reject) => {
         post<BaseInterface>(`/article/addArticle`, {
-            articleType:type,
-            articleTitle:title,
-            articleContext:html,
-            icon:icon
+            articleType: type,
+            articleTitle: title,
+            articleContext: html,
+            icon: icon
         }).then(r => {
             if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+            return resolve(r.data);
+        }).catch(e => {
+            return requestError(e);
+        })
+    })
+}
+
+export const addRead = (articleId: number) => {
+    return new Promise<BaseInterface>((resolve, reject) => {
+        post<BaseInterface>(`/article/addRead`, {
+            articleId: articleId
+        }).then(r => {
+            if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+            return resolve(r.data);
+        }).catch(e => {
+            return requestError(e);
+        })
+    })
+}
+
+export const getCommits = (articleId: number) => {
+    return new Promise<CommitsInterface>((resolve, reject) => {
+        get<CommitsInterface>(`/article/getCommits?articleId=${articleId}`).then(r => {
+            if (r.status !== 200) return requestError(r);
+            return resolve(r.data);
+        }).catch(e => {
+            return requestError(e);
+        })
+    })
+}
+
+export const addCommits = ({articleId, context}: { articleId: number, context: string }) => {
+    return new Promise<CommitsInterface>((resolve, reject) => {
+        post<CommitsInterface>(`/article/addCommits`, {
+            articleId: articleId,
+            context: context
+        }).then(r => {
+            if (r.status !== 200) return requestError(r);
             return resolve(r.data);
         }).catch(e => {
             return requestError(e);

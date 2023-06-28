@@ -9,6 +9,7 @@ import {Forget} from "../pages/forget";
 import {Article} from "../pages/article";
 import {ArticleList} from "../pages/articleList";
 import {EditArticle} from "../pages/editArticle";
+import {About} from "../pages/about";
 
 export const AppRouter = () => {
 
@@ -17,6 +18,7 @@ export const AppRouter = () => {
             <CommonComponent/>
             <Routes>
                 <Route path={'/'} element={<Home/>}/>
+                <Route path={'/about'} element={<About/>}/>
                 <Route path={'/register'} element={<Register/>}/>
                 <Route path={'/forget'} element={<Forget/>}/>
                 <Route path={'/articleList'} element={<ArticleList/>}/>

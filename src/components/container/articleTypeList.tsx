@@ -4,6 +4,7 @@ import {ArticleTypeInterface, SizeInterface} from "../../config/publicInterface"
 import "../../sass/common/articleTypeList.sass";
 import {getArticleType} from "../../config/api";
 import {useNavigate} from "react-router-dom";
+import PubSub from "pubsub-js";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -33,7 +34,6 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
     const [selectStatus, setSelectStatus] = useState<string>('');
     const history = useNavigate();
     useEffect(() => {
-
         const generateMenuItems = (data: ArticleTypeInterface, rootId = 0): MenuItem[] => {
             return data.data.articleTypeList
                 .filter((item) => item.root_id === rootId)
@@ -57,6 +57,7 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
     const selectHandler = (ev: any) => {
         // console.log(ev)
         setSelectStatus(ev.key);
+        PubSub.publish('menuShow',false);
         history('/articleList', {state: {typeId: ev.key * 1}})
     }
     return (

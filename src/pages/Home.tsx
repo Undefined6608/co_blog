@@ -6,6 +6,7 @@ export const Home:React.FC = () => {
 
     return (
         <div className={"commonPages home"}>
+            sdjoiasdiohadsiuh
         </div>
     )
 }
