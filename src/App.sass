@@ -2,6 +2,24 @@
   position: relative
   display: flex
   flex-wrap: wrap
-
-$md-bg-code: #f8f8f8
-$md-code: #f3b37f
+  color: var(--color)
+  background: var(--bg)
+\:root
+  --bg: hsl(219, 30%, 100%)
+  --bear-speed: 10s
+  --color: hsl(219, 30%, 12%)
+  --cover: rgba(0, 0, 0, .5)
+  --inputColor: #f2f2f2
+  --transparent: rgba(255, 255, 255, 0)
+  --shadowColor: #aaa
+  --tipsColor: #f00
+  --borderColor: #ececec
+  --lightBlackColor: #a69999
+  --itemSelectColor: #f0f0f0
+  --headerItemColor: #4b5563
+[data-dark-mode=true]
+  --bg: #000000
+  --color: hsl(219 30% 98%)
+  --cover: rgba(255,255,255,.5)
+  --headerItemColor: hsl(219 30% 98%)
+  --itemSelectColor: #4f4f4f

@@ -64,6 +64,7 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
         <div className={"articleTypeList"}
              style={{width: param.width, height: param.height, marginTop: param.marginTop}}>
             <Menu
+                className={"menuList"}
                 defaultSelectedKeys={[selectStatus]}
                 defaultOpenKeys={[selectStatus]}
                 mode="inline"

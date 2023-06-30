@@ -57,6 +57,7 @@ export interface ArticleTypeInterface extends BaseInterface {
 export interface ArticleItemInterface {
     id: number,
     userName: string,
+    avatar: string,
     read: number,
     title: string,
     context: string,

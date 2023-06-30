@@ -100,7 +100,7 @@ const CommitComponent: React.ForwardRefRenderFunction<HTMLDivElement, CommitComp
                 <TextArea rows={4} maxLength={255} className={"inputCommit"} onChange={e => {
                     setCommitVal(e.currentTarget.value);
                 }}/>
-                <Button style={{width: "50%"}} onClick={updateCommit}>提交</Button>
+                <Button className={"commit_btn"} style={{width: "50%"}} onClick={updateCommit}>提交</Button>
             </Card>
             {
                 !loginState ?

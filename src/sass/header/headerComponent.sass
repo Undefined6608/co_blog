@@ -1,7 +1,7 @@
 @at-root
   .headerBox
-    background-color: hsla(0,0%,100%,.85)
-    border-bottom: 1px solid #ececec
+    background-color: var(--bg)
+    border-bottom: 1px solid var(--borderColor)
     position: sticky
     z-index: 20
     top: 0
@@ -25,18 +25,34 @@
         .logo
           font-size: 20px
           text-decoration: none
-          color: black
+          color: var(--color)
 
         .logo:hover
-          color: #585858
+          color: var(--lightBlackColor)
 
       .header-right
-        width: 480px
+        width: 600px
         height: 100%
         display: flex
         flex-wrap: wrap
         align-items: center
         justify-content: space-between
+
+        .switch
+          width: 45px
+          height: 25px
+          background: #ccc
+          display: flex
+          justify-content: flex-start
+          border-radius: 12.5px
+          padding: 5px
+          cursor: pointer
+
+        .handle
+          width: 15px
+          height: 15px
+          background-color: white
+          border-radius: 7.5px
 
         .btn-list
           display: inline-block
@@ -45,7 +61,7 @@
           font-size: 14px
           font-weight: 500
           line-height: 21px
-          color: #4b5563
+          color: var(--headerItemColor)
           text-decoration: none
 
         .icon-item
@@ -55,6 +71,15 @@
           img
             width: 100%
             height: 100%
+        .switch[data-ison="true"]
+          justify-content: flex-end
+          background: #666
+          .handle
+            width: 15px
+            height: 15px
+            background-color: black
+            border-radius: 7.5px
+
 
 
   @media (max-width: 780px)

@@ -33,7 +33,7 @@ export const RegisterForm: React.FC = () => {
             phone: values.phone,
             email: values.email
         }).then((r) => {
-            console.log(r)
+            // console.log(r)
             if (r.code === 404) return PubSub.publish('openTip', {
                 type: 'warning',
                 msg: {message: "注册失败！", description: r.msg}
@@ -55,7 +55,7 @@ export const RegisterForm: React.FC = () => {
         return new Promise<void>((resolve, reject) => {
             setTimeout(() => {
                 userNameOccupy({username: value}).then((r) => {
-                    console.log(r)
+                    // console.log(r)
                     if (r.code === 404) return reject(r.msg);
                     resolve();
                 })
@@ -67,7 +67,7 @@ export const RegisterForm: React.FC = () => {
         return await new Promise<void>((resolve, reject) => {
             setTimeout(() => {
                 phoneOccupy({phone: value}).then((r) => {
-                    console.log(r);
+                    // console.log(r);
                     if (r.code === 404) return reject(new Error(r.msg));
                     resolve();
                 })
@@ -79,7 +79,7 @@ export const RegisterForm: React.FC = () => {
         return new Promise<void>((resolve, reject) => {
             setTimeout(() => {
                 emailOccupy({email: value}).then((r) => {
-                    console.log(r);
+                    // console.log(r);
                     if (r.code === 404) return reject(new Error(r.msg));
                     resolve();
                 })

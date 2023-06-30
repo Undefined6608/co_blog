@@ -24,10 +24,10 @@ export const EditComponent: React.FC<EditComponentParam> = ({param, typeParam, c
     const [theme, setTheme] = useState<'dark' | 'light'>('light');
     useEffect(() => {
         setType(typeParam);
-        if (typeParam) return setText(contextParam);
-        const subToken = PubSub.subscribe('setTheme', (_, val: 'dark' | 'light') => {
-            setTheme(val);
+        const subToken = PubSub.subscribe('setTheme', (_, val: boolean) => {
+            setTheme(val ? 'dark' : 'light');
         })
+        if (typeParam) return setText(contextParam);
         return () => {
             PubSub.unsubscribe(subToken);
         }
@@ -62,7 +62,7 @@ export const EditComponent: React.FC<EditComponentParam> = ({param, typeParam, c
                       theme={theme}
                       readOnly={type}
                       previewTheme={previewTheme} onSave={(v, h) => {
-                console.log(v);
+                // console.log(v);
                 h.then((html) => {
                     addArticleHandler(html);
                 })

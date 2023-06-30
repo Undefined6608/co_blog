@@ -32,7 +32,13 @@ export const ArticleItem: React.FC<ArticleItemParam> = ({param, data}) => {
             <div className={"articleItemMsg"}>
                 <span className={"title"}>{data.title}</span>
                 <span className={"context"}>{data.context}</span>
-                <span className={"read"}>浏览量：{data.read}</span>
+                <div className={"author"}>
+                    <span className={"nickname"}>
+                        <img className={"avatar"} src={data.avatar} alt=""/>
+                        <span className={"username"}>{data.userName}</span>
+                    </span>
+                    <span className={"read"}>浏览量：{data.read}</span>
+                </div>
             </div>
             <div className={"date"}>{data.date}</div>
         </motion.li>
