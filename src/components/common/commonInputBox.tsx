@@ -25,9 +25,9 @@ export const CommonInputBox: React.FC<SizeInterface> = ({param}) => {
     };
 
     return (
-        <div className="input-box" style={{width: param.width, height: param.height,marginTop:param.marginTop}}>
-            <input type="text" name={"search"} className={"input"} onInput={updateTipShow} value={inputValue} ref={inputRef}
-                   placeholder={"Search Documentation..."}/>
+        <div className="input-box" style={{width: param.width, height: param.height, marginTop: param.marginTop}}>
+            <input type="text" name={"search"} className={"input"} onInput={updateTipShow} value={inputValue}
+                   ref={inputRef} placeholder={"Search Documentation..."} style={{height: param.height}}/>
             <span className={"input-box-tip"}>{tipShow ? "CTRL K" : "ESC"}</span>
         </div>
     )

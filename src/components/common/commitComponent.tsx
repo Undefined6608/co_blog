@@ -2,7 +2,7 @@ import React, {forwardRef, useCallback, useEffect, useState} from "react";
 import {SizeInterface} from "../../config/publicInterface";
 import "../../sass/common/commitComponent.sass";
 import TextArea from "antd/es/input/TextArea";
-import {Avatar, Button, Card, Empty, List, Tag} from "antd";
+import {Avatar, Button, Card, Empty, List, Space, Tag} from "antd";
 import {addCommits, getCommits, getUserInfo} from "../../config/api";
 import PubSub from "pubsub-js";
 
@@ -122,9 +122,13 @@ const CommitComponent: React.ForwardRefRenderFunction<HTMLDivElement, CommitComp
                                     <List.Item.Meta
                                         key={item.id}
                                         avatar={<Avatar src={item.userAvatar}/>}
-                                        title={<div><span>{item.title}</span><Tag
-                                            style={{height: "20px", margin: "0 5px", scale: "0.7"}}
-                                            color={item.member === 0 ? "gold" : item.member === 1 ? "red" : "blue"}>{item.member === 0 ? "SVIP" : item.member === 1 ? "VIP" : "普通用户"}</Tag>
+                                        title={<div><span>{item.title}</span>
+                                            <Space size={[0, 10]} wrap>
+                                                <Tag style={{height: "20px", scale: "0.7"}}
+                                                     color={item.member === 0 ? "gold" : item.member === 1 ? "red" : "blue"}>{item.member === 0 ? "SVIP" : item.member === 1 ? "VIP" : "普通用户"}</Tag>
+                                                <Tag style={{height: "20px", scale: "0.7"}}
+                                                     color={item.integral >= 10000 ? "purple" : item.integral >= 1000 ? "magenta" : "cyan"}>{item.integral >= 10000 ? "大牛" : item.integral === 1000 ? "资深" : "初入门庭"}</Tag>
+                                            </Space>
                                         </div>}
                                         description={item.context}
                                     />

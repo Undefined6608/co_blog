@@ -14,6 +14,8 @@ interface IRequestParams {
     [key: string]: any;
 }
 
+const baseUrl = process.env.REACT_APP_DEBUG_URL;
+
 // 封装请求方法
 function request<T>(
     method: RequestMethod,
@@ -21,7 +23,7 @@ function request<T>(
     data?: IRequestParams,
 ): AxiosPromise<T> {
     return axios({
-        baseURL: '/api',
+        baseURL: baseUrl,
         withCredentials: true,
         headers: {"Content-Type": "application/json"},
         method,

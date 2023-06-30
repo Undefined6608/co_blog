@@ -10,6 +10,8 @@ import {Article} from "../pages/article";
 import {ArticleList} from "../pages/articleList";
 import {EditArticle} from "../pages/editArticle";
 import {About} from "../pages/about";
+import {FeedBack} from "../pages/feedBack";
+import {UserSetting} from "../pages/userSetting";
 
 export const AppRouter = () => {
 
@@ -19,6 +21,8 @@ export const AppRouter = () => {
             <Routes>
                 <Route path={'/'} element={<Home/>}/>
                 <Route path={'/about'} element={<About/>}/>
+                <Route path={'/userSetting'} element={<UserSetting/>}/>
+                <Route path={'/feedBack'} element={<FeedBack/>}/>
                 <Route path={'/register'} element={<Register/>}/>
                 <Route path={'/forget'} element={<Forget/>}/>
                 <Route path={'/articleList'} element={<ArticleList/>}/>

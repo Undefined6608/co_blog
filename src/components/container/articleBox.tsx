@@ -1,10 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import {SizeInterface} from "../../config/publicInterface";
 import "../../sass/container/articleBox.sass";
 import "github-markdown-css/github-markdown-light.css";
-import {FloatButton} from "antd";
 import {EditComponent} from "../common/editComponent";
-import {CommentOutlined} from "@ant-design/icons";
 
 interface ArticleBoxParam extends SizeInterface {
     context: string

@@ -28,7 +28,7 @@ export const ArticleList: React.FC = () => {
             {
                 !loading ?
                     articleList?.data.articleList.length ?
-                        <ul style={{width:'100%'}}>
+                        <ul style={{width: '100%', padding: 0}}>
                             <AnimatePresence mode={"sync"}>
                                 {
                                     articleList.data.articleList.map((item) => (
