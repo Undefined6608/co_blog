@@ -14,6 +14,7 @@ export const CommonInputBox: React.FC<SizeInterface> = ({param}) => {
     };
     // 键盘监听事件
     onkeydown = (ev) => {
+        ev.preventDefault();
         // console.log(ev)
         if (ev.ctrlKey && ev.code === "KeyK") return inputRef.current?.focus();
         if (ev.code === "Escape") {

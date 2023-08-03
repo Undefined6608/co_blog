@@ -32,6 +32,7 @@ interface ChildProps extends SizeInterface {
 export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) => {
     const [items, setItems] = useState<MenuItem[]>([]);
     const [selectStatus, setSelectStatus] = useState<string>('');
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
     const history = useNavigate();
     useEffect(() => {
         const generateMenuItems = (data: ArticleTypeInterface, rootId = 0): MenuItem[] => {
@@ -39,25 +40,37 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
                 .filter((item) => item.root_id === rootId)
                 .map((item) => {
                     const children = generateMenuItems(data, item.id);
-                    if (children.length > 0) return getItem(item.type_name, item.id, <img className={"icon"}
-                                                                                          width={"16px"}
-                                                                                          src={item.picture}
-                                                                                          alt={''}/>, children);
-                    return getItem(item.type_name, item.id, <img className={"icon"} width={"16px"}
-                                                                 src={item.picture} alt={''}/>);
+                    if (children.length > 0) return getItem(item.type_name, item.id, <div className={"iconBox"}><img
+                        className={theme === 'dark' ? "icon_select" : ""}
+                        width={"16px"}
+                        src={item.picture}
+                        alt={''}/></div>, children);
+                    return getItem(item.type_name, item.id, <div className={"iconBox"}><img
+                        className={theme === 'dark' ? "icon_select" : ""}
+                        width={"16px"}
+                        src={item.picture}
+                        alt={''}/></div>);
                 });
         };
+
+        const themeHandler = PubSub.subscribe('setTheme', (_, val: boolean) => {
+            if (val) return setTheme('dark');
+            setTheme('light');
+        })
 
         getArticleType().then((r) => {
             if (r.code !== 200) return;
             const updatedItems = generateMenuItems(r);
             setItems(updatedItems);
         })
-    }, []);
+        return () => {
+            PubSub.unsubscribe(themeHandler)
+        }
+    }, [theme]);
     const selectHandler = (ev: any) => {
         // console.log(ev)
         setSelectStatus(ev.key);
-        PubSub.publish('menuShow',false);
+        PubSub.publish('menuShow', false);
         history('/articleList', {state: {typeId: ev.key * 1}})
     }
     return (
@@ -68,7 +81,7 @@ export const ArticleTypeList: React.FC<ChildProps> = ({param, state, setState}) 
                 defaultSelectedKeys={[selectStatus]}
                 defaultOpenKeys={[selectStatus]}
                 mode="inline"
-                theme="light"
+                theme={theme}
                 onClick={selectHandler}
                 selectable={true}
                 inlineCollapsed={state}

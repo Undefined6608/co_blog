@@ -35,7 +35,10 @@ const HeaderComponent: React.FC<HeaderComponentParam> = ({param, menuShow}) => {
                 </div>
                 <div className="header-right">
                     <div className="switch" data-ison={isOn} data-dark-mode={isOn} onClick={toggleSwitch}>
-                        <motion.div className="handle" layout transition={spring}/>
+                        <motion.div className="handle" layout transition={spring}>
+                            <img className={"btnImg"} src={isOn ? "/static/images/mon.png" : "/static/images/sun.png"}
+                                 alt=""/>
+                        </motion.div>
                     </div>
                     <Link to={"/"} className={"btn-list"}>Home</Link>
                     <Link to={"/about"} className={"btn-list"}>About</Link>
@@ -43,7 +46,7 @@ const HeaderComponent: React.FC<HeaderComponentParam> = ({param, menuShow}) => {
                     <div className="icon-item" onClick={() => {
                         window.location.href = "https://github.com/Undefined6608"
                     }}>
-                        <img src="/static/images/github.png" alt=""/>
+                        <img className={isOn ? 'img-dark' : ''} src="/static/images/github.png" alt=""/>
                     </div>
                     <UserBtn param={{width: "24px", height: "72px", marginTop: '0'}}/>
                     <HeaderMenu param={{width: "24px", height: "24px", marginTop: '0'}} menuShow={menuShow}/>

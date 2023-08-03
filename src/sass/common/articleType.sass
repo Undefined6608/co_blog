@@ -1,24 +1,23 @@
 .articleType
-  min-height: calc(100vh - 72px)
+  max-height: calc(100vh - 72px)
   display: flex
   flex-wrap: wrap
   position: sticky
   top: 72px
+  left: 0
   justify-content: center
-  overflow-y: scroll
+  transform: translate(0,0)
 
   .childShow
     width: 20px
     height: 60px
-    background: var(--bg)
+    background: var(--btn-bg)
     padding: 0
     border: 0
     border-radius: 0 5px 5px 0
-    position: relative
-    top: 250px
-
-.articleType::-webkit-scrollbar
-  display: none
+    position: fixed
+    top: 40vh
+    right: -20px
 
 @media (max-width: 780px)
   .articleType

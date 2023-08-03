@@ -40,7 +40,7 @@ export const ArticleList: React.FC = () => {
                             </AnimatePresence>
                             <Divider>暂无更多</Divider>
                         </ul> :
-                        <Empty description={"暂无数据"}/> :
+                        <Empty description={"暂无数据"} className={"custom-empty"}/> :
                     <Spin spinning={loading} size={"large"} children={"正在玩命加载中···"}/>
             }
 

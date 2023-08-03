@@ -43,7 +43,7 @@ export const EditComponent: React.FC<EditComponentParam> = ({param, typeParam, c
             type: 'warning',
             msg: {message: "必填数据存在空值！", description: '请检查后再提交！'}
         });
-        addArticle({type: updateData.type, title: updateData.title, html: html, icon: updateData.icon}).then((r) => {
+        addArticle({type: updateData.type, title: updateData.title, html: text, icon: updateData.icon}).then((r) => {
             if (r.code !== 200) return PubSub.publish('openTip', {
                 type: 'error',
                 msg: {message: "保存失败！", description: r.msg}
