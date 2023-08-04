@@ -33,7 +33,7 @@ export const ArticleList: React.FC = () => {
                                 {
                                     articleList.data.articleList.map((item) => (
                                         <ArticleItem key={item.id}
-                                                     param={{width: "100%", height: "80px", marginTop: "0"}}
+                                                     param={{width: "100%", height: "80px", marginTop: "10px"}}
                                                      data={item}/>
                                     ))
                                 }

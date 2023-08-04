@@ -33,10 +33,16 @@
         flex-wrap: wrap
         align-items: center
         justify-content: space-around
-
-        .icon
+        .iconBox
           width: 24px
-          height: 24px
+          overflow: hidden
+          .icon
+            width: 100%
+          .transition-icon
+            position: relative
+            left: -30px
+            -webkit-filter: drop-shadow(30px 0 0 #000)
+            filter: drop-shadow(30px 0 0 #fff)
 
   .user-btn:hover
     .setting-list

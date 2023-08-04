@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 
 export const UserBtn: React.FC<SizeInterface> = ({param}) => {
     const [userInfo, setUserInfo] = useState<UserInfoInterface | null>(null);
+    const [theme, setTheme] = useState(false);
     const getInfo = useCallback(() => {
         getUserInfo().then((r) => {
             // console.log(r.data)
@@ -22,9 +23,12 @@ export const UserBtn: React.FC<SizeInterface> = ({param}) => {
         const loginInfoToken = PubSub.subscribe('getLoginInfo', (_, val: boolean) => {
             val ? getInfo() : setUserInfo(null);
         })
-
+        const themeToken = PubSub.subscribe('setTheme', (_, val: boolean) => {
+            setTheme(val);
+        })
         return () => {
             PubSub.unsubscribe(loginInfoToken);
+            PubSub.unsubscribe(themeToken);
         }
     }, [getInfo]);
     // 打开登录组件
@@ -71,19 +75,25 @@ export const UserBtn: React.FC<SizeInterface> = ({param}) => {
                                 userInfo.data.limits === 0 || userInfo.data.limits === 1 ?
                                     userSettingList.map((item, index) => (
                                         <Link key={item.id} to={item.href} className="setting-item">
-                                            <img className={"icon"} src={item.icon} alt=""/>
+                                            <div className={"iconBox"}>
+                                                <img className={theme?"icon transition-icon":"icon"} src={item.icon} alt=""/>
+                                            </div>
                                             <span className={"name"}>{item.name}</span>
                                         </Link>
                                     )) :
                                     userSettingList.slice(1).map((item, index) => (
                                         <Link key={item.id} to={item.href} className="setting-item">
-                                            <img className={"icon"} src={item.icon} alt=""/>
+                                            <div className={"iconBox"}>
+                                                <img className={theme?"icon transition-icon":"icon"} src={item.icon} alt=""/>
+                                            </div>
                                             <span className={"name"}>{item.name}</span>
                                         </Link>
                                     ))
                             }
                             <a href={"/"} className="setting-item" onClick={handleLogout}>
-                                <img className={"icon"} src={"/static/images/tuichudenglu.png"} alt=""/>
+                                <div className={"iconBox"}>
+                                    <img className={theme?"icon transition-icon":"icon"} src={"/static/images/tuichudenglu.png"} alt=""/>
+                                </div>
                                 <span className={"name"}>{"退出登录"}</span>
                             </a>
                         </div> :

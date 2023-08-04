@@ -48,7 +48,8 @@ export interface ArticleTypeInterface extends BaseInterface {
                 root_id: number,
                 type_name: string,
                 type_visible: number,
-                picture: string
+                picture: string,
+                edit_status: number
             }
         ]
     }

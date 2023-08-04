@@ -23,21 +23,32 @@ export const EditArticle: React.FC = () => {
 
     const props: UploadProps = {
         name: 'image',
-        action: '/api/upload/img',
+        action: 'http://39.101.72.168:4001/api/upload/img',
+        // action: '/api/upload/img',
         headers: {
             ContentType: 'multipart/form-data',
         },
-        onChange(info) {
-            console.log(info);
-            if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
+        beforeUpload: (file) => {
+            const isPNG = file.type === 'image/png';
+            if (!isPNG) {
+                message.error(`${file.name} 不是png类型`);
+                return false; // 阻止文件上传
             }
+            const fileSizeLimit = 5 * 1024 * 1024; // 2 MB (以字节为单位)
+            if (file.size > fileSizeLimit) {
+                message.error('文件大小超过限制（最大5MB）');
+                return false; // 阻止文件上传
+            }
+            return isPNG || Upload.LIST_IGNORE;
+        },
+        onChange(info) {
+            // console.log(info);
             if (info.file.status === 'done') {
                 if (info.file.response.code !== 200) return;
                 setIcon(info.file.response.data[0].url);
-                message.success(`${info.file.name} file uploaded successfully`);
+                message.success(`${info.file.name} 图片上传成功!`);
             } else if (info.file.status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
+                message.error(`${info.file.name} 图片上传失败!`);
             }
         },
     };
@@ -47,7 +58,8 @@ export const EditArticle: React.FC = () => {
                 type: 'warning',
                 msg: {message: "请求失败！", description: r.msg}
             })
-            const updateTypeList: Array<{ value: number, label: string }> = r.data.articleTypeList.map((item) => {
+            const updateTypeList: Array<{ value: number, label: string }> = r.data.articleTypeList.filter(person => person.edit_status === 1).map((item) => {
+
                 return {value: item.id, label: item.type_name};
             })
             return setTypeList(updateTypeList);
@@ -71,7 +83,7 @@ export const EditArticle: React.FC = () => {
                 <div className={"selectItem"}>
                     文章展示图片：
                     <Upload {...props}>
-                        <Button icon={<UploadOutlined/>}>Click to Upload</Button>
+                        <Button icon={<UploadOutlined/>}>.png上传图片</Button>
                     </Upload>
                 </div>
             </div>
