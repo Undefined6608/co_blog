@@ -27,7 +27,10 @@ export const EditComponent: React.FC<EditComponentParam> = ({param, typeParam, c
         const subToken = PubSub.subscribe('setTheme', (_, val: boolean) => {
             setTheme(val ? 'dark' : 'light');
         })
-        if (typeParam) return setText(contextParam);
+        if (typeParam) {
+            setText(contextParam)
+            return
+        }
         return () => {
             PubSub.unsubscribe(subToken);
         }

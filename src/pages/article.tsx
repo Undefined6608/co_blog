@@ -11,7 +11,7 @@ import CommitComponent from "../components/common/commitComponent";
 
 export const Article: React.FC = () => {
     const [articleMsg, setArticleMsg] = useState<ArticleMsgInterface>();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const {state} = useLocation();
     const commentRef = useRef<HTMLDivElement>(null);
     const goComment = () => {
@@ -19,9 +19,9 @@ export const Article: React.FC = () => {
         commentRef.current.scrollIntoView({behavior: 'smooth'});
     }
     useEffect(() => {
-        setLoading(true);
         getArticleMsg(state.articleId).then((r) => {
             if (r.code !== 200) return setArticleMsg(undefined);
+            setLoading(true);
             setArticleMsg(r);
         }).finally(() => {
             setLoading(false);
@@ -35,7 +35,9 @@ export const Article: React.FC = () => {
                         <>
                             <ArticleBox param={{width: "100%", height: "100%", marginTop: "30px"}}
                                         context={articleMsg.data.context}/>
-                            <CommitComponent ref={commentRef} param={{width:'100%',height:'300px',marginTop:'20px'}} articleId={state.articleId}/>
+                            <CommitComponent ref={commentRef}
+                                             param={{width: '100%', height: '300px', marginTop: '20px'}}
+                                             articleId={state.articleId}/>
                             <FloatButton.Group shape="circle" style={{right: 24}}>
                                 <FloatButton icon={<CommentOutlined/>} onClick={goComment} tooltip={"查看评论"}/>
                                 <FloatButton.BackTop visibilityHeight={30} tooltip={"返回顶端"}/>

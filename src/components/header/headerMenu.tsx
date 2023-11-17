@@ -9,8 +9,15 @@ interface HeaderMenuParam extends SizeInterface {
 
 export const HeaderMenu: React.FC<HeaderMenuParam> = ({param, menuShow}) => {
     const [show, setShow] = useState(false);
+    const [theme, setTheme] = useState(false);
     useEffect(() => {
         setShow(menuShow);
+        const themeToken = PubSub.subscribe('setTheme', (_, val: boolean) => {
+            setTheme(val);
+        })
+        return () => {
+            PubSub.unsubscribe(themeToken);
+        }
     }, [menuShow])
     const updateShow = () => {
         const nextShow = !show;
@@ -21,8 +28,10 @@ export const HeaderMenu: React.FC<HeaderMenuParam> = ({param, menuShow}) => {
     return (
         <div className="menu" style={{width: param.width, height: param.height, marginTop: param.marginTop}}
              onClick={updateShow}>
-            <img className={!show ? "show" : ""} src="/static/images/menu.png" alt=""/>
-            <img className={show ? "show" : ""} src="/static/images/quxiao.png" alt=""/>
+            <div className={theme ? "menuBox menuBox-dark" : "menuBox"}>
+                <img className={!show ? "show" : ""} src="/static/images/menu.png" alt=""/>
+                <img className={show ? "show" : ""} src="/static/images/quxiao.png" alt=""/>
+            </div>
         </div>
     )
 }

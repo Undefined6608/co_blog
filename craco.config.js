@@ -1,6 +1,6 @@
 const path = require('path');
 module.exports = {
-    homepage: 'http://192.168.127.1:3000',
+    homepage: 'http://127.0.0.1:3000',
     webpack: {
         configure: {
             resolve: {
