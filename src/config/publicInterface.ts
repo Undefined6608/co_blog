@@ -12,6 +12,12 @@ export interface BaseInterface {
     data: {}
 }
 
+export interface LoginInterface extends BaseInterface {
+    data:{
+        token: string
+    }
+}
+
 export interface UserInfoInterface extends BaseInterface {
     data: {
         username: string,
@@ -42,7 +48,8 @@ export interface UserSettingInterface {
 
 export interface ArticleTypeInterface extends BaseInterface {
     data: {
-        articleTypeList: [
+        // articleTypeList: [
+        articleType: [
             {
                 id: number,
                 root_id: number,
@@ -68,31 +75,43 @@ export interface ArticleItemInterface {
 
 export interface ArticleListInterface extends BaseInterface {
     data: {
-        articleList: ArticleItemInterface[]
+        // articleList: ArticleItemInterface[]
+        rows: ArticleItemInterface[]
     }
 }
 
 export interface ArticleMsgInterface extends BaseInterface {
     data: {
-        id: number,
+        data:{
+            id: number,
+            userName: string,
+            read: number,
+            title: string,
+            context: string,
+            date: string,
+            icon: string
+        }
+        /*id: number,
         userName: string,
         read: number,
         title: string,
         context: string,
         date: string,
-        icon: string
+        icon: string*/
     }
 }
 
 export interface CommitsInterface extends BaseInterface {
-    data: [
-        {
-            user_name: string,
-            integral: number,
-            member: number,
-            head_sculpture: string,
-            id: number,
-            context: string,
-        }
-    ]
+    data: {
+        rows:[
+            {
+                user_name: string,
+                integral: number,
+                member: number,
+                head_sculpture: string,
+                id: number,
+                context: string,
+            }
+        ]
+    }
 }

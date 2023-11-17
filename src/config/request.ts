@@ -1,70 +1,70 @@
-import axios, {AxiosPromise} from 'axios';
+import axios, {AxiosPromise} from "axios";
 import PubSub from "pubsub-js";
 
 // 请求方法名枚举
 enum RequestMethod {
-    Get = 'get',
-    Post = 'post',
-    Put = 'put',
-    Delete = 'delete',
+	Get = "get",
+	Post = "post",
+	Put = "put",
+	Delete = "delete",
 }
 
 // 定义请求参数接口
 interface IRequestParams {
-    [key: string]: any;
+	[key: string]: any;
 }
 
-// const baseUrl = process.env.REACT_APP_DEBUG_URL;
-const baseUrl = process.env.REACT_APP_RELEASE_URL;
+const baseUrl = process.env.REACT_APP_DEBUG_URL;
+// const baseUrl = process.env.REACT_APP_RELEASE_URL;
 // 封装请求方法
 function request<T>(
-    method: RequestMethod,
-    url: string,
-    data?: IRequestParams,
+	method: RequestMethod,
+	url: string,
+	data?: IRequestParams,
 ): AxiosPromise<T> {
-    return axios({
-        baseURL: baseUrl,
-        withCredentials: true,
-        headers: {"Content-Type": "application/json"},
-        method,
-        url,
-        data,
-    });
+	return axios({
+		baseURL: baseUrl,
+		withCredentials: true,
+		headers: {"Content-Type": "application/json"},
+		method,
+		url,
+		data,
+	});
 }
 
 // GET 请求方法
 export function get<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
-    return request<T>(RequestMethod.Get, url, params);
+	return request<T>(RequestMethod.Get, url, params);
 }
 
 // POST 请求方法
 export function post<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
-    return request<T>(RequestMethod.Post, url, data);
+	return request<T>(RequestMethod.Post, url, data);
 }
 
 // PUT 请求方法
 export function put<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
-    return request<T>(RequestMethod.Put, url, data);
+	return request<T>(RequestMethod.Put, url, data);
 }
 
 // DELETE 请求方法
 export function del<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
-    return request<T>(RequestMethod.Delete, url, params);
+	return request<T>(RequestMethod.Delete, url, params);
 }
 
 export const loginSuccess = () => {
-    PubSub.publish('openTip', {
-        type: 'success',
-        msg: {message: "登录成功！", description: ""}
-    })
-    PubSub.publish('getLoginInfo', true);
-    PubSub.publish('loginStatus', false);
-    PubSub.publish('commitLoginStatus', true);
-}
+	PubSub.publish("openTip", {
+		type: "success",
+		msg: { message: "登录成功！", description: "" }
+	});
+	PubSub.publish("getLoginInfo", true);
+	PubSub.publish("loginStatus", false);
+	PubSub.publish("commitLoginStatus", true);
+};
 
 export const loginFail = (r: any) => {
-    PubSub.publish('openTip', {
-        type: 'warning',
-        msg: {message: "登录失败：", description: r.msg}
-    })
-}
+	PubSub.publish("openTip", {
+		type: "warning",
+		msg: { message: "登录失败：", description: r.msg }
+	});
+};

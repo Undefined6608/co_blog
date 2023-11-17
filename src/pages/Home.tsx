@@ -2,11 +2,11 @@ import React from "react";
 import "../sass/pages/commonPages.sass";
 import "../sass/pages/home.sass";
 
-export const Home:React.FC = () => {
+export const Home: React.FC = () => {
 
-    return (
-        <div className={"commonPages home"}>
-            主页
-        </div>
-    )
-}
+	return (
+		<div className={"commonPages home"}>
+			主页
+		</div>
+	);
+};
