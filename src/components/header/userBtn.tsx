@@ -37,7 +37,7 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 		PubSub.publish("loginStatus", true);
 	};
 	// 退出登录请求
-	const handleLogout = (ev: any) => {
+	const handleLogout = (ev: React.MouseEvent) => {
 		ev.preventDefault();
 		logout().then((r) => {
 			// console.log(r.data)
@@ -73,7 +73,7 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 						<div className={"setting-list"}>
 							{
 								userInfo.data.limits === 0 || userInfo.data.limits === 1 ?
-									userSettingList.map((item, index) => (
+									userSettingList.map((item) => (
 										<Link key={item.id} to={item.href} className="setting-item">
 											<div className={"iconBox"}>
 												<img className={theme ? "icon transition-icon" : "icon"} src={item.icon} alt="" />
@@ -81,7 +81,7 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 											<span className={"name"}>{item.name}</span>
 										</Link>
 									)) :
-									userSettingList.slice(1).map((item, index) => (
+									userSettingList.slice(1).map((item) => (
 										<Link key={item.id} to={item.href} className="setting-item">
 											<div className={"iconBox"}>
 												<img className={theme ? "icon transition-icon" : "icon"} src={item.icon} alt="" />

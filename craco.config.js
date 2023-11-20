@@ -17,13 +17,7 @@ module.exports = {
 			'@utils': pathResolve('src/utils')
 			// 此处是一个示例，实际可根据各自需求配置
 		},
-		homepage: "http://127.0.0.1:3000"
-	},
-	babel: {
-		plugins: [
-			['import', { libraryName: 'antd', style: true }],
-			['@babel/plugin-proposal-decorators', { legacy: true }]
-		]
+
 	},
 	plugins: [
 		{
