@@ -1,37 +1,37 @@
 @at-root
-  .menuComponent
-    width: 100%
-    display: flex
-    flex-direction: column
-    align-items: center
-    z-index: 2
-    position: fixed
-    top: 72px
-    overflow-y: scroll
-    background: var(--bg)
+	.menuComponent
+		width: 100%
+		display: flex
+		flex-direction: column
+		align-items: center
+		z-index: 2
+		position: fixed
+		top: 72px
+		overflow-y: scroll
+		background: var(--bg)
 
-    .btn-list
-      display: inline-block
-      width: 90%
-      text-align: center
-      font-size: 14px
-      height: 33px
-      line-height: 33px
-      border-radius: 5px
-      margin-top: 10px
-      color: var(--color)
-      text-decoration: none
+		.btn-list
+			display: inline-block
+			width: 90%
+			text-align: center
+			font-size: 14px
+			height: 33px
+			line-height: 33px
+			border-radius: 5px
+			margin-top: 10px
+			color: var(--color)
+			text-decoration: none
 
-    .btn-list:hover
-      background-color: var(--itemSelectColor)
+		.btn-list:hover
+			background-color: var(--itemSelectColor)
 
-  .showMenu
-    min-height: calc(100vh - 72px)
-    height: auto
+	.showMenu
+		min-height: calc(100vh - 72px)
+		height: auto
 
-  .menuComponent::-webkit-scrollbar
-    display: none /* 设置滚动条宽度 */
+	.menuComponent::-webkit-scrollbar
+		display: none /* 设置滚动条宽度 */
 
-  @media (min-width: 780px)
-    .menuComponent
-      display: none
+	@media (min-width: 780px)
+		.menuComponent
+			display: none

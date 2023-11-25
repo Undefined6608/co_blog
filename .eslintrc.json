@@ -1,0 +1,24 @@
+{
+	"parser": "@typescript-eslint/parser",
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2020,
+		"sourceType": "module"
+	},
+	"rules": {
+		// 在这里添加或覆盖规则
+		"quotes": ["error", "double"]
+	},
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	}
+}

@@ -1,109 +1,109 @@
 @at-root
-  .headerBox
-    background-color: var(--bg)
-    border-bottom: 1px solid var(--borderColor)
-    position: sticky
-    z-index: 20
-    top: 0
-    backdrop-filter: blur(12px)
+	.headerBox
+		background-color: var(--bg)
+		border-bottom: 1px solid var(--borderColor)
+		position: sticky
+		z-index: 20
+		top: 0
+		backdrop-filter: blur(12px)
 
-    .header
-      width: 95%
-      height: 100%
-      margin: 0 auto
-      display: flex
-      flex-wrap: wrap
-      align-items: center
-      justify-content: space-between
+		.header
+			width: 95%
+			height: 100%
+			margin: 0 auto
+			display: flex
+			flex-wrap: wrap
+			align-items: center
+			justify-content: space-between
 
-      .header-left
-        width: auto
-        height: 100%
-        line-height: 72px
-        text-align: left
+			.header-left
+				width: auto
+				height: 100%
+				line-height: 72px
+				text-align: left
 
-        .logo
-          font-size: 20px
-          text-decoration: none
-          color: var(--color)
+				.logo
+					font-size: 20px
+					text-decoration: none
+					color: var(--color)
 
-        .logo:hover
-          color: var(--lightBlackColor)
+				.logo:hover
+					color: var(--lightBlackColor)
 
-      .header-right
-        width: 600px
-        height: 100%
-        display: flex
-        flex-wrap: wrap
-        align-items: center
-        justify-content: space-between
+			.header-right
+				width: 600px
+				height: 100%
+				display: flex
+				flex-wrap: wrap
+				align-items: center
+				justify-content: space-between
 
-        .switch
-          width: 45px
-          height: 25px
-          background: #ccc
-          display: flex
-          justify-content: flex-start
-          border-radius: 12.5px
-          padding: 5px
-          cursor: pointer
+				.switch
+					width: 45px
+					height: 25px
+					background: #ccc
+					display: flex
+					justify-content: flex-start
+					border-radius: 12.5px
+					padding: 5px
+					cursor: pointer
 
-        .handle
-          width: 15px
-          height: 15px
-          background-color: white
-          border-radius: 7.5px
-          position: relative
+				.handle
+					width: 15px
+					height: 15px
+					background-color: white
+					border-radius: 7.5px
+					position: relative
 
-          .btnImg
-            width: 10px
-            height: 10px
-            position: absolute
-            top: 2.5px
-            left: 2.5px
-            border-radius: 7.5px
+					.btnImg
+						width: 10px
+						height: 10px
+						position: absolute
+						top: 2.5px
+						left: 2.5px
+						border-radius: 7.5px
 
-        .btn-list
-          display: inline-block
-          width: 57px
-          text-align: center
-          font-size: 14px
-          font-weight: 500
-          line-height: 21px
-          color: var(--headerItemColor)
-          text-decoration: none
+				.btn-list
+					display: inline-block
+					width: 57px
+					text-align: center
+					font-size: 14px
+					font-weight: 500
+					line-height: 21px
+					color: var(--headerItemColor)
+					text-decoration: none
 
-        .icon-item
-          width: 24px
-          height: 24px
-          overflow: hidden
+				.icon-item
+					width: 24px
+					height: 24px
+					overflow: hidden
 
-          img
-            width: 100%
-            height: 100%
+					img
+						width: 100%
+						height: 100%
 
-          .img-dark
-            position: relative
-            left: -30px
-            -webkit-filter: drop-shadow(30px 0 0 #000)
-            filter: drop-shadow(30px 0 0 #fff)
+					.img-dark
+						position: relative
+						left: -30px
+						-webkit-filter: drop-shadow(30px 0 0 #000)
+						filter: drop-shadow(30px 0 0 #fff)
 
-        .switch[data-ison="true"]
-          justify-content: flex-end
-          background: #666
+				.switch[data-ison="true"]
+					justify-content: flex-end
+					background: #666
 
-          .handle
-            width: 15px
-            height: 15px
-            background-color: black
-            border-radius: 7.5px
+					.handle
+						width: 15px
+						height: 15px
+						background-color: black
+						border-radius: 7.5px
 
 
-  @media (max-width: 780px)
-    .headerBox
-      .header
-        .header-right
-          width: 170px
+	@media (max-width: 780px)
+		.headerBox
+			.header
+				.header-right
+					width: 170px
 
-          .btn-list, .input-box
-            display: none
+					.btn-list, .input-box
+						display: none

@@ -58,6 +58,7 @@
 		"@types/js-cookie": "^3.0.3",
 		"@types/pubsub-js": "^1.8.3",
 		"craco-less": "^3.0.1",
+		"eslint": "^8.54.0",
 		"sass": "^1.63.4"
 	}
 }

@@ -13,7 +13,7 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 	const [theme, setTheme] = useState(false);
 	const getInfo = useCallback(() => {
 		getUserInfo().then((r) => {
-			// console.log(r.data)
+			// console.log(r);
 			if (r.code === 200) return setUserInfo(r);
 		});
 	}, []);

@@ -17,7 +17,7 @@ module.exports = {
 			'@utils': pathResolve('src/utils')
 			// 此处是一个示例，实际可根据各自需求配置
 		},
-
+		homepage: "http://0.0.0.0:3000"
 	},
 	plugins: [
 		{

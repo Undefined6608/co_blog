@@ -19,7 +19,7 @@ export const LoginForm: React.FC = () => {
 			phoneLogin({
 				phone: values.username, password: values.password, remember: 1
 			}).then((r) => {
-				// console.log(r);
+				console.log(r);
 				if (r?.code === 200) {
 					loginSuccess();
 					return;
