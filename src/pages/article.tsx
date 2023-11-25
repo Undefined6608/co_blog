@@ -46,8 +46,8 @@ export const Article: React.FC = () => {
 						</> :
 						<Empty description={"暂无数据"} />
 					:
-					<Spin spinning={loading} size={"large"} children={"正在玩命加载中···"} />
-			}
+					<Spin spinning={loading} size={"large"}>正在玩命加载中···</Spin>
+			};
 		</div>
 	);
 };

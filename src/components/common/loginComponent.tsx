@@ -20,7 +20,7 @@ export const LoginComponent: React.FC = () => {
 		setShow(!show);
 	};
 
-	const handlerStop = (event: any) => {
+	const handlerStop:React.MouseEventHandler<HTMLDivElement> = (event) => {
 		event.stopPropagation();  // 阻止事件冒泡
 	};
 

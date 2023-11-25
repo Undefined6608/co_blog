@@ -29,7 +29,7 @@ interface ChildProps extends SizeInterface {
 	setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ArticleTypeList: React.FC<ChildProps> = ({ param, state, setState }) => {
+export const ArticleTypeList: React.FC<ChildProps> = ({ param, state }) => {
 	const [items, setItems] = useState<MenuItem[]>([]);
 	const [selectStatus, setSelectStatus] = useState<string>("");
 	const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -68,11 +68,15 @@ export const ArticleTypeList: React.FC<ChildProps> = ({ param, state, setState }
 			PubSub.unsubscribe(themeHandler);
 		};
 	}, [theme]);
-	const selectHandler = (ev: any) => {
+	const selectHandler: (info: {
+		key: string;
+    keyPath: string[];
+    item: React.ReactInstance;
+    domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;}) => void = (ev) => {
 		// console.log(ev)
 		setSelectStatus(ev.key);
 		PubSub.publish("menuShow", false);
-		history("/articleList", { state: { typeId: ev.key * 1 } });
+		history("/articleList", { state: { typeId: 1 * parseInt(ev.key) } });
 	};
 	return (
 		<div className={"articleTypeList"} style={{ width: param.width, height: param.height, marginTop: param.marginTop }}>

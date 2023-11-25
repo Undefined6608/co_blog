@@ -43,7 +43,7 @@ export const ArticleList: React.FC = () => {
 							<Divider>暂无更多</Divider>
 						</ul> :
 						<Empty description={"暂无数据"} className={"custom-empty"} /> :
-					<Spin spinning={loading} size={"large"} children={"正在玩命加载中···"} />
+					<Spin spinning={loading} size={"large"}>正在玩命加载中···</Spin>
 			}
 
 		</div>

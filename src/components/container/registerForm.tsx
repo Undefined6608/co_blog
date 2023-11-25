@@ -6,11 +6,12 @@ import {
 	Input,
 	Select
 } from "antd";
+import { RuleObject } from "rc-field-form/lib/interface";
 import {formRule, LoginRegExp} from "../../config/rules";
 import {emailOccupy, phoneOccupy, register, userNameOccupy} from "../../config/api";
 import PubSub from "pubsub-js";
 
-const {Option} = Select;
+const { Option } = Select;
 
 const formItemLayout = {
 	labelCol: {
@@ -23,10 +24,17 @@ const formItemLayout = {
 	},
 };
 
+type formData = {
+	username: string,
+	password: string,
+	phone: string,
+	email: string
+};
+
 export const RegisterForm: React.FC = () => {
 	const [form] = Form.useForm();
 
-	const onFinish = (values: any) => {
+	const onFinish:(values: formData)=>void = (values) => {
 		register({
 			username: values.username,
 			password: values.password,
@@ -51,7 +59,7 @@ export const RegisterForm: React.FC = () => {
 		});
 	};
 
-	const validatorUserName = (_: any, value: string) => {
+	const validatorUserName = (_: RuleObject, value: string) => {
 		return new Promise<void>((resolve, reject) => {
 			setTimeout(() => {
 				userNameOccupy({ username: value }).then((r) => {
@@ -63,7 +71,7 @@ export const RegisterForm: React.FC = () => {
 		});
 	};
 
-	const validatorPhone = async (_: any, value: string) => {
+	const validatorPhone = async (_: RuleObject, value: string) => {
 		return await new Promise<void>((resolve, reject) => {
 			setTimeout(() => {
 				phoneOccupy({ phone: value }).then((r) => {
@@ -75,7 +83,7 @@ export const RegisterForm: React.FC = () => {
 		});
 	};
 
-	const validatorEmail = async (_: any, value: string) => {
+	const validatorEmail = async (_: RuleObject, value: string) => {
 		return new Promise<void>((resolve, reject) => {
 			setTimeout(() => {
 				emailOccupy({ email: value }).then((r) => {

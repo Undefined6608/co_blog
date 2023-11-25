@@ -9,7 +9,7 @@ export interface SizeInterface {
 export interface BaseInterface {
     code: number,
     msg: string,
-    data: {}
+    data: object
 }
 
 export interface LoginInterface extends BaseInterface {

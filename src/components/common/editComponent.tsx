@@ -35,9 +35,11 @@ export const EditComponent: React.FC<EditComponentParam> = ({ param, typeParam, 
 			PubSub.unsubscribe(subToken);
 		};
 	}, [typeParam, contextParam]);
-	const onUploadImg = async (files: Array<File>, callback: any) => {
+	const onUploadImg = async (files: Array<File>, callback: (urls: string[]) => void) => {
 		const res = await updateImg(files);
-		callback(res.map((item) => item.data.map((item) => item.url)));
+		const urls = res.flatMap(item => item.data.map(innerItem => innerItem.url));
+		// res.map((item) => item.data.map((item) => item.url))
+		callback(urls);
 	};
 
 	const addArticleHandler = (html: string) => {

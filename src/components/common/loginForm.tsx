@@ -7,11 +7,16 @@ import {emailLogin, phoneLogin} from "../../config/api";
 import PubSub from "pubsub-js";
 import {loginFail, loginSuccess} from "../../config/request";
 import {Link, useNavigate} from "react-router-dom";
-
+type FormValues = {
+	username: string,
+	password: string,
+	remember: boolean
+}
 export const LoginForm: React.FC = () => {
 	const [tips, setTips] = useState("");
 	const history = useNavigate();
-	const onFinish = (values: any) => {
+	
+	const onFinish: (values: FormValues) => void = (values) => {
 		if (!values.remember) return setTips("请勾选-同意用户协议");
 		if (LoginRegExp.illegal.test(values.username) || LoginRegExp.illegal.test(values.password)) return setTips("数据中含有非法字符！");
 		if (!LoginRegExp.phone.test(values.username) && !LoginRegExp.email.test(values.username)) return setTips("用户名格式错误！");

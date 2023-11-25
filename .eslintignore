@@ -1,6 +1,7 @@
 node_modules/
 dist/
 build/
-webpack.config.js
+craco.config.js
+setupProxy.js
 __tests__/
 *.json

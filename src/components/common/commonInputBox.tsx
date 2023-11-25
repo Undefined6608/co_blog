@@ -7,9 +7,10 @@ export const CommonInputBox: React.FC<SizeInterface> = ({ param }) => {
 	const [tipShow, setTipShow] = useState(true);
 	const inputRef = useRef<HTMLInputElement>(null);
 	// 更新输入框内部组件显示
-	const updateTipShow = (ev: any) => {
-		setInputValue(ev.target.value);
-		if (ev.target.value === "") return setTipShow(true);
+	const updateTipShow = (ev: React.FormEvent<HTMLInputElement>) => {
+		const target = ev.target as HTMLInputElement;
+		setInputValue(target.value);
+		if (target.value === "") return setTipShow(true);
 		setTipShow(false);
 	};
 	// 键盘监听事件
