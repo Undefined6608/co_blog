@@ -17,7 +17,28 @@ module.exports = {
 			'@utils': pathResolve('src/utils')
 			// 此处是一个示例，实际可根据各自需求配置
 		},
-		homepage: "http://0.0.0.0:3000"
+		performance: {
+			hints: 'error',
+			maxAssetSize: 300000000, // 整数类型（以字节为单位）
+			maxEntrypointSize: 500000000 // 整数类型（以字节为单位）
+		},
+		// 更改build打包文件名称为dist
+		configure: (webpackConfig, { env, paths }) => {
+			webpackConfig.output.path = path.resolve(__dirname, 'dist')
+			paths.appBuild = path.resolve(__dirname, 'dist')
+			return webpackConfig
+		},
+	},
+	devServer: {
+		host: '0.0.0.0',
+		port: 3000,
+		proxy: {
+			'/api': {
+				target: 'http://39.101.72.168:6005',
+				// target: 'http://localhost:4001',
+				changeOrigin: true
+			}
+		}
 	},
 	plugins: [
 		{

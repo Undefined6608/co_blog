@@ -8,10 +8,10 @@ import {
 import PubSub from "pubsub-js";
 import axios from "axios";
 
-const requestError = (e: any) => {
+const requestError = (e: Error) => {
 	PubSub.publish("openTip", {
 		type: "error",
-		msg: { message: "请求失败", description: e.msg }
+		msg: { message: "请求失败", description: e.message }
 	});
 };
 
@@ -53,7 +53,7 @@ export const register = async ({ username, password, phone, email }: { username:
 			phone: phone,
 			email: email
 		}).then((r) => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch((e) => {
 			reject(e);
@@ -66,7 +66,9 @@ export const phoneLogin = async ({ phone, password, remember }: { phone: string,
 	if (!remember) return;
 	return await new Promise<LoginInterface>((resolve, reject) => {
 		post<LoginInterface>("/user/phoneLogin", { phone: phone, password: password }).then((r) => {
-			if (r.status !== 200) return requestError(r);
+			console.log(r);
+			
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch((e) => {
 			reject(e);
@@ -79,7 +81,7 @@ export const emailLogin = async ({ email, password, remember }: { email: string,
 	if (!remember) return;
 	return await new Promise<LoginInterface>((resolve, reject) => {
 		post<LoginInterface>("/user/emailLogin", { email: email, password: password }).then((r) => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch((e) => {
 			reject(e);
@@ -91,7 +93,7 @@ export const emailLogin = async ({ email, password, remember }: { email: string,
 export const getUserInfo = async () => {
 	return await new Promise<UserInfoInterface>((resolve, reject) => {
 		get<UserInfoInterface>("/user/userInfo").then((r) => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch((e) => {
 			reject(e);
@@ -103,7 +105,7 @@ export const getUserInfo = async () => {
 export const logout = async () => {
 	return new Promise<BaseInterface>((resolve, reject) => {
 		post<BaseInterface>("/user/logout").then(r => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -116,7 +118,7 @@ export const logout = async () => {
 /*export const getArticleType = () => {
 	return new Promise<ArticleTypeInterface>((resolve, reject) => {
 		get<ArticleTypeInterface>("/article/getArticleType").then(r => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			return requestError(e);
@@ -127,7 +129,7 @@ export const logout = async () => {
 export const getArticleType = () => {
 	return new Promise<ArticleTypeInterface>((resolve, reject) => {
 		get<ArticleTypeInterface>("/article/articleType").then(r => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -140,7 +142,7 @@ export const getArticleList = (typeId: number) => {
 	return new Promise<ArticleListInterface>((resolve, reject) => {
 		// get<ArticleListInterface>(`/article/getArticleList?typeId=${typeId}`).then(r => {
 		get<ArticleListInterface>(`/article/articleList?type_id=${typeId}`).then(r => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -153,7 +155,7 @@ export const getArticleMsg = (articleId: number) => {
 	return new Promise<ArticleMsgInterface>((resolve, reject) => {
 		// get<ArticleMsgInterface>(`/article/getArticleMsg?articleId=${articleId}`).then(r => {
 		get<ArticleMsgInterface>(`/article/articleInfo?article_id=${articleId}`).then(r => {
-			if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+			if (r.status !== 200 || r.data.code !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -192,7 +194,7 @@ export const addArticle = ({ type, title, html, icon }: { type: number, title: s
 			articleContext: html,
 			icon: icon
 		}).then(r => {
-			if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+			if (r.status !== 200 || r.data.code !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -207,7 +209,7 @@ export const addRead = (articleId: number) => {
 		post<BaseInterface>("/article/updateRead", {
 			article_id: articleId
 		}).then(r => {
-			if (r.status !== 200 || r.data.code !== 200) return requestError(r);
+			if (r.status !== 200 || r.data.code !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -220,7 +222,7 @@ export const getCommits = (articleId: number) => {
 	return new Promise<CommitsInterface>((resolve, reject) => {
 		// get<CommitsInterface>(`/article/getCommits?articleId=${articleId}`).then(r => {
 		get<CommitsInterface>(`/article/articleComment?article_id=${articleId}`).then(r => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -235,7 +237,7 @@ export const addCommits = ({ articleId, context }: { articleId: number, context:
 			articleId: articleId,
 			context: context
 		}).then(r => {
-			if (r.status !== 200) return requestError(r);
+			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch(e => {
 			reject(e);
@@ -243,12 +245,3 @@ export const addCommits = ({ articleId, context }: { articleId: number, context:
 		});
 	});
 };
-
-
-
-
-
-
-
-
-

@@ -15,7 +15,8 @@
 	"rules": {
 		// 在这里添加或覆盖规则
 		"quotes": ["error", "double"],
-		"semi": ["error", "always"]
+		"semi": ["error", "always"],
+		"keyword-spacing": ["error", { "before": true }]
 	},
 	"settings": {
 		"react": {

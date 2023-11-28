@@ -42,7 +42,7 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 		logout().then((r) => {
 			// console.log(r.data)
 			if (r.code === 200) {
-				Cookies.remove("connect.sid", { path: "/" });
+				Cookies.remove("token", { path: "/" });
 				PubSub.publish("openTip", {
 					type: "success",
 					msg: { message: "退出成功！", description: "" }

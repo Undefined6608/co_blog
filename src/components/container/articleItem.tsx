@@ -13,7 +13,7 @@ export const ArticleItem: React.FC<ArticleItemParam> = ({ param, data }) => {
 	const history = useNavigate();
 	const handlerArticle = () => {
 		addRead(data.id).then((r) => {
-			// console.log(r);
+			console.log(r);
 		});
 		history("/article", { state: { articleId: data.id } });
 	};

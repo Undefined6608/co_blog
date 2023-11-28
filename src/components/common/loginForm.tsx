@@ -24,18 +24,15 @@ export const LoginForm: React.FC = () => {
 			phoneLogin({
 				phone: values.username, password: values.password, remember: 1
 			}).then((r) => {
-				console.log(r);
-				if (r?.code === 200) {
-					loginSuccess();
-					return;
-				}
-				if (r?.code === 404) return loginFail(r);
+				// console.log(r);
+				if (r?.code !== 200) return loginFail(new Error(r?.msg));
+				loginSuccess(r.data.token);
 			});
 		}
 		if (LoginRegExp.email.test(values.username)) {
 			emailLogin({ email: values.username, password: values.password, remember: 1 }).then((r) => {
-				if (r?.code === 200) return loginSuccess();
-				if (r?.code === 404) return loginFail(r);
+				if (r?.code !== 200) return loginFail(new Error(r?.msg));
+				loginSuccess(r.data.token);
 			});
 		}
 	};

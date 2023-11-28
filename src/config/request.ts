@@ -1,4 +1,5 @@
 import axios, {AxiosPromise} from "axios";
+import Cookies from "js-cookie";
 import PubSub from "pubsub-js";
 
 // 请求方法名枚举
@@ -11,11 +12,13 @@ enum RequestMethod {
 
 // 定义请求参数接口
 interface IRequestParams {
-	[key: string]: any;
+	[key: string]: object|string|number;
 }
 
 const baseUrl = process.env.REACT_APP_DEBUG_URL;
 // const baseUrl = process.env.REACT_APP_RELEASE_URL;
+
+const token = Cookies.get("token");
 // 封装请求方法
 function request<T>(
 	method: RequestMethod,
@@ -25,7 +28,7 @@ function request<T>(
 	return axios({
 		baseURL: baseUrl,
 		withCredentials: true,
-		headers: {"Content-Type": "application/json"},
+		headers: { "Content-Type": "application/json", "Authorization": token ? token : "" },
 		method,
 		url,
 		data,
@@ -52,19 +55,20 @@ export function del<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
 	return request<T>(RequestMethod.Delete, url, params);
 }
 
-export const loginSuccess = () => {
+export const loginSuccess = (token: string) => {
 	PubSub.publish("openTip", {
 		type: "success",
 		msg: { message: "登录成功！", description: "" }
 	});
+	Cookies.set("token", token,{ expires: 1, path: "/" });
 	PubSub.publish("getLoginInfo", true);
 	PubSub.publish("loginStatus", false);
 	PubSub.publish("commitLoginStatus", true);
 };
 
-export const loginFail = (r: any) => {
+export const loginFail = (e: Error) => {
 	PubSub.publish("openTip", {
 		type: "warning",
-		msg: { message: "登录失败：", description: r.msg }
+		msg: { message: "登录失败：", description: e.message }
 	});
 };
