@@ -15,15 +15,14 @@ interface IRequestParams {
 	[key: string]: object|string|number;
 }
 
-const baseUrl = process.env.REACT_APP_DEBUG_URL;
+export const baseUrl = process.env.REACT_APP_DEBUG_URL;
 // const baseUrl = process.env.REACT_APP_RELEASE_URL;
-
-const token = Cookies.get("token");
 // 封装请求方法
 function request<T>(
 	method: RequestMethod,
 	url: string,
 	data?: IRequestParams,
+	token?: string
 ): AxiosPromise<T> {
 	return axios({
 		baseURL: baseUrl,
@@ -37,22 +36,22 @@ function request<T>(
 
 // GET 请求方法
 export function get<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
-	return request<T>(RequestMethod.Get, url, params);
+	return request<T>(RequestMethod.Get, url, params, Cookies.get("token"));
 }
 
 // POST 请求方法
 export function post<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
-	return request<T>(RequestMethod.Post, url, data);
+	return request<T>(RequestMethod.Post, url, data, Cookies.get("token"));
 }
 
 // PUT 请求方法
 export function put<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
-	return request<T>(RequestMethod.Put, url, data);
+	return request<T>(RequestMethod.Put, url, data, Cookies.get("token"));
 }
 
 // DELETE 请求方法
 export function del<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
-	return request<T>(RequestMethod.Delete, url, params);
+	return request<T>(RequestMethod.Delete, url, params, Cookies.get("token"));
 }
 
 export const loginSuccess = (token: string) => {

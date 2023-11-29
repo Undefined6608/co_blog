@@ -1,9 +1,10 @@
 import React from "react";
-import {ArticleItemInterface, SizeInterface} from "../../config/publicInterface";
+import { ArticleItemInterface, SizeInterface } from "../../config/publicInterface";
 import "../../sass/container/articleItem.sass";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import {addRead} from "../../config/api";
+import { Space, Tag } from "antd";
+import { addRead } from "../../config/api";
 
 interface ArticleItemParam extends SizeInterface {
 	data: ArticleItemInterface
@@ -11,10 +12,9 @@ interface ArticleItemParam extends SizeInterface {
 
 export const ArticleItem: React.FC<ArticleItemParam> = ({ param, data }) => {
 	const history = useNavigate();
+
 	const handlerArticle = () => {
-		addRead(data.id).then((r) => {
-			console.log(r);
-		});
+		addRead(data.id);
 		history("/article", { state: { articleId: data.id } });
 	};
 	return (
@@ -27,13 +27,17 @@ export const ArticleItem: React.FC<ArticleItemParam> = ({ param, data }) => {
 				<span className={"context"}>{data.context}</span>
 				<div className={"author"}>
 					<span className={"nickname"}>
-						<img className={"avatar"} src={data.avatar} alt="" />
-						<span className={"username"}>{data.userName}</span>
+						<img className={"avatar"} src={data.head_sculpture} alt="" />
+						<span className={"username"}>{data.user_name}</span>
+						<Space size={[0, 10]} wrap>
+							<Tag style={{ height: "20px", scale: "0.7" }} color={data.member === 0 ? "gold" : data.member === 1 ? "red" : "blue"}>{data.member === 0 ? "SVIP" : data.member === 1 ? "VIP" : "普通用户"}</Tag>
+							<Tag style={{ height: "20px", scale: "0.7" }} color={data.integral >= 10000 ? "purple" : data.integral >= 1000 ? "magenta" : "cyan"}>{data.integral >= 10000 ? "大牛" : data.integral === 1000 ? "资深" : "初入门庭"}</Tag>
+						</Space>
 					</span>
 					<span className={"read"}>浏览量：{data.read}</span>
 				</div>
 			</div>
-			<div className={"date"}>{data.date}</div>
+			<div className={"date"}>{data.date.replace(/T\d{2}:\d{2}:\d{2}\+\d{2}:\d{2}/, "")}</div>
 		</motion.li>
 	);
 };

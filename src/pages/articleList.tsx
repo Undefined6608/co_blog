@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../sass/pages/commonPages.sass";
 import "../sass/pages/articleList.sass";
-import {ArticleListInterface} from "../config/publicInterface";
-import {getArticleList} from "../config/api";
-import {useLocation} from "react-router-dom";
-import {ArticleItem} from "../components/container/articleItem";
-import {Divider, Empty, Spin} from "antd";
-import {AnimatePresence} from "framer-motion";
+import { ArticleListInterface } from "../config/publicInterface";
+import { getArticleList } from "../config/api";
+import { useLocation } from "react-router-dom";
+import { ArticleItem } from "../components/container/articleItem";
+import { Divider, Empty, Spin } from "antd";
+import { AnimatePresence } from "framer-motion";
 
 export const ArticleList: React.FC = () => {
 	const [articleList, setArticleList] = useState<ArticleListInterface>();
@@ -16,7 +16,7 @@ export const ArticleList: React.FC = () => {
 	useEffect(() => {
 		setLoading(true);
 		getArticleList(state.typeId).then((r) => {
-			// console.log(r)
+			// console.log(r);
 			if (r.code !== 200) return setArticleList(undefined);
 			setArticleList(r);
 		}).finally(() => {
@@ -27,7 +27,7 @@ export const ArticleList: React.FC = () => {
 		<div className={"commonPages articleList"}>
 			{
 				!loading ?
-				// articleList?.data.articleList.length ?
+					// articleList?.data.articleList.length ?
 					articleList?.data.rows.length ?
 						<ul style={{ width: "100%", padding: 0 }}>
 							<AnimatePresence mode={"sync"}>

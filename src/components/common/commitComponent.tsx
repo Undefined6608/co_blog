@@ -1,9 +1,9 @@
-import React, {forwardRef, useCallback, useEffect, useState} from "react";
-import {SizeInterface} from "../../config/publicInterface";
+import React, { forwardRef, useCallback, useEffect, useState } from "react";
+import { SizeInterface } from "../../config/publicInterface";
 import "../../sass/common/commitComponent.sass";
 import TextArea from "antd/es/input/TextArea";
-import {Avatar, Button, Card, Empty, List, Space, Tag} from "antd";
-import {addCommits, getCommits, getUserInfo} from "../../config/api";
+import { Avatar, Button, Card, Empty, List, Space, Tag } from "antd";
+import { addCommits, getCommits, getUserInfo } from "../../config/api";
 import PubSub from "pubsub-js";
 
 interface CommitComponentParam extends SizeInterface {
@@ -118,7 +118,7 @@ const CommitComponent: React.ForwardRefRenderFunction<HTMLDivElement, CommitComp
 							renderItem={(item) => (
 								<List.Item>
 									<List.Item.Meta
-										key={item.id}
+										key={"commits" + item.id}
 										avatar={<Avatar src={item.userAvatar} />}
 										title={<div><span>{item.title}</span>
 											<Space size={[0, 10]} wrap>

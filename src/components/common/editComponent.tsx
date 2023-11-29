@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {SizeInterface} from "../../config/publicInterface";
-import {MdEditor} from "md-editor-rt";
+import React, { useEffect, useState } from "react";
+import { SizeInterface } from "../../config/publicInterface";
+import { MdEditor } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import "../../sass/common/editComponent.sass";
-import {addArticle, updateImg} from "../../config/api";
+import { addArticle, updateImg } from "../../config/api";
 import PubSub from "pubsub-js";
 
 interface EditComponentParam extends SizeInterface {
@@ -27,12 +27,16 @@ export const EditComponent: React.FC<EditComponentParam> = ({ param, typeParam, 
 		const subToken = PubSub.subscribe("setTheme", (_, val: boolean) => {
 			setTheme(val ? "dark" : "light");
 		});
+		const saveArticle = PubSub.subscribe("saveArticle", () => {
+			addArticleHandler(text);
+		});
 		if (typeParam) {
 			setText(contextParam);
 			return;
 		}
 		return () => {
 			PubSub.unsubscribe(subToken);
+			PubSub.unsubscribe(saveArticle);
 		};
 	}, [typeParam, contextParam]);
 	const onUploadImg = async (files: Array<File>, callback: (urls: string[]) => void) => {
@@ -61,12 +65,7 @@ export const EditComponent: React.FC<EditComponentParam> = ({ param, typeParam, 
 	};
 	return (
 		<>
-			<MdEditor className={type ? "show" : "edit"} modelValue={text} onChange={setText} onUploadImg={onUploadImg} style={{ width: param.width, height: param.height, marginTop: param.marginTop }} showCodeRowNumber={true} theme={theme} readOnly={type} previewTheme={previewTheme} onSave={(v, h) => {
-				// console.log(v);
-				h.then((html) => {
-					addArticleHandler(html);
-				});
-			}} />
+			<MdEditor className={type ? "show" : "edit"} modelValue={text} onChange={setText} onUploadImg={onUploadImg} style={{ width: param.width, height: param.height, marginTop: param.marginTop }} showCodeRowNumber={true} theme={theme} readOnly={type} previewTheme={previewTheme} onSave={() => { PubSub.publish("saveShow"); }} />
 		</>
 	);
 };

@@ -22,7 +22,7 @@ export const Article: React.FC = () => {
 	};
 	useEffect(() => {
 		getArticleMsg(state.articleId).then((r) => {
-			// console.log(r)
+			// console.log(r);
 			if (r.code !== 200) return setArticleMsg(undefined);
 			setLoading(true);
 			setArticleMsg(r);
@@ -47,7 +47,7 @@ export const Article: React.FC = () => {
 						<Empty description={"暂无数据"} />
 					:
 					<Spin spinning={loading} size={"large"}>正在玩命加载中···</Spin>
-			};
+			}
 		</div>
 	);
 };

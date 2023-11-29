@@ -17,7 +17,7 @@ const requestError = (e: Error) => {
 
 export const userNameOccupy = async ({ username }: { username: string }) => {
 	return await new Promise<BaseInterface>((resolve, reject) => {
-		post<BaseInterface>("/user/userNameOccupy", { username: username }).then((r) => {
+		post<BaseInterface>("/user/userNameOccupy", { user_name: username }).then((r) => {
 			return resolve(r.data);
 		}).catch((e) => {
 			reject(e);
@@ -66,8 +66,6 @@ export const phoneLogin = async ({ phone, password, remember }: { phone: string,
 	if (!remember) return;
 	return await new Promise<LoginInterface>((resolve, reject) => {
 		post<LoginInterface>("/user/phoneLogin", { phone: phone, password: password }).then((r) => {
-			console.log(r);
-			
 			if (r.status !== 200) return requestError(new Error(r.data.msg));
 			return resolve(r.data);
 		}).catch((e) => {
@@ -189,9 +187,9 @@ export const updateImg = async (files: Array<File>) => {
 export const addArticle = ({ type, title, html, icon }: { type: number, title: string, html: string, icon: string }) => {
 	return new Promise<BaseInterface>((resolve, reject) => {
 		post<BaseInterface>("/article/addArticle", {
-			articleType: type,
-			articleTitle: title,
-			articleContext: html,
+			typeId: type,
+			title: title,
+			context: html,
 			icon: icon
 		}).then(r => {
 			if (r.status !== 200 || r.data.code !== 200) return requestError(new Error(r.data.msg));
@@ -233,8 +231,8 @@ export const getCommits = (articleId: number) => {
 
 export const addCommits = ({ articleId, context }: { articleId: number, context: string }) => {
 	return new Promise<CommitsInterface>((resolve, reject) => {
-		post<CommitsInterface>("/article/addCommits", {
-			articleId: articleId,
+		post<CommitsInterface>("/article/addComment", {
+			article_id: articleId,
 			context: context
 		}).then(r => {
 			if (r.status !== 200) return requestError(new Error(r.data.msg));

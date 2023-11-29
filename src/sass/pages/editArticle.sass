@@ -1,43 +1,51 @@
 .editArticleBox
+	align-items: flex-end
+	position: relative
 	.selectList
-		width: 100%
-		height: 44px
+		width: 100vw
+		height: 100vh
 		display: flex
+		position: fixed
+		background: #00000033
+		top: 0
+		left: 0
+		z-index: 2
 		flex-wrap: wrap
 		align-items: center
 		justify-content: space-around
 
-		.selectItem
-			width: 33%
-			height: 33px
-			display: flex
-			flex-wrap: nowrap
-			align-items: center
-			justify-content: center
-
-			.ant-input,.ant-upload-wrapper,.ant-select-selector,.ant-btn
-				display: inline-block
-				flex: 1
-				background-color: var(--bg)
-				color: var(--color)
-
-@media (max-width: 1100px)
-	.editArticleBox
-		.selectList
-			width: 100%
-			height: 120px
+		.selectBox
+			width: 65%
+			height: 400px
+			padding: 50px
+			background: #ffffff
+			margin: 0 auto
 			display: flex
 			flex-direction: column
 			align-items: center
 			justify-content: space-around
+			box-shadow: 0 0 5px #aaa
+			box-sizing: border-box
+			border-radius: 20px
 
 			.selectItem
-				width: auto
+				width: 70%
 				height: 33px
 				display: flex
-				flex-wrap: wrap
+				flex-wrap: nowrap
 				align-items: center
 				justify-content: center
 
-				.ant-input
+				.ant-input,.ant-upload-wrapper,.ant-select-selector,.ant-btn,.ant-select
+					display: inline-block
 					flex: 1
+					// background-color: var(--bg)
+					// color: var(--color)
+
+@media (max-width: 1100px)
+	.editArticleBox
+		.selectList
+			.selectBox
+				width: 70%
+				padding: 50px 20px
+				.selectItem

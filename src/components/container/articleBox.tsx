@@ -1,8 +1,8 @@
 import React from "react";
-import {SizeInterface} from "../../config/publicInterface";
+import { SizeInterface } from "../../config/publicInterface";
 import "../../sass/container/articleBox.sass";
 import "github-markdown-css/github-markdown-light.css";
-import {EditComponent} from "../common/editComponent";
+import { EditComponent } from "../common/editComponent";
 
 interface ArticleBoxParam extends SizeInterface {
 	context: string

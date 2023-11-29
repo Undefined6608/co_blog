@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../../sass/header/userBtn.sass";
-import {SizeInterface, UserInfoInterface} from "../../config/publicInterface";
-import {userSettingList} from "../../utils/staticData";
-import {Link} from "react-router-dom";
+import { SizeInterface, UserInfoInterface } from "../../config/publicInterface";
+import { userSettingList } from "../../utils/staticData";
+import { Link } from "react-router-dom";
 import PubSub from "pubsub-js";
-import {getUserInfo, logout} from "../../config/api";
-import {LoginOutlined} from "@ant-design/icons";
+import { getUserInfo, logout } from "../../config/api";
+import { LoginOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 
 export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
@@ -72,7 +72,7 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 					userInfo ?
 						<div className={"setting-list"}>
 							{
-								userInfo.data.limits === 0 || userInfo.data.limits === 1 ?
+								userInfo.data.limit === 0 || userInfo.data.limit === 1 ?
 									userSettingList.map((item) => (
 										<Link key={item.id} to={item.href} className="setting-item">
 											<div className={"iconBox"}>

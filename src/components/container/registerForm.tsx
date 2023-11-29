@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../../sass/container/registerForm.sass";
 import {
 	Button,
@@ -7,22 +7,11 @@ import {
 	Select
 } from "antd";
 import { RuleObject } from "rc-field-form/lib/interface";
-import {formRule, LoginRegExp} from "../../config/rules";
-import {emailOccupy, phoneOccupy, register, userNameOccupy} from "../../config/api";
+import { formRule, LoginRegExp } from "../../config/rules";
+import { emailOccupy, phoneOccupy, register, userNameOccupy } from "../../config/api";
 import PubSub from "pubsub-js";
 
 const { Option } = Select;
-
-const formItemLayout = {
-	labelCol: {
-		xs: {span: 24},
-		sm: {span: 4},
-	},
-	wrapperCol: {
-		xs: {span: 24},
-		sm: {span: 40},
-	},
-};
 
 type formData = {
 	username: string,
@@ -33,8 +22,28 @@ type formData = {
 
 export const RegisterForm: React.FC = () => {
 	const [form] = Form.useForm();
+	const [verShow, setVerShow] = useState("获取验证码");
+	const [verDisable, setVerDisable] = useState(false);
+	// 设置基础计时
+	let time = 60;
+	const verHandler = () => {
+		time = 60;
+		verCountDown;
+		setVerDisable(true);
+	};
 
-	const onFinish:(values: formData)=>void = (values) => {
+	const verCountDown = setInterval(() => {
+		setVerShow(time + "");
+		if (time === 0) {
+			setVerShow("重新获取验证码");
+			setVerDisable(false);
+			clearInterval(verCountDown);
+			return;
+		}
+		time--;
+	}, 1000);
+
+	const onFinish: (values: formData) => void = (values) => {
 		register({
 			username: values.username,
 			password: values.password,
@@ -63,8 +72,8 @@ export const RegisterForm: React.FC = () => {
 		return new Promise<void>((resolve, reject) => {
 			setTimeout(() => {
 				userNameOccupy({ username: value }).then((r) => {
-					// console.log(r)
-					if (r.code === 404) return reject(r.msg);
+					console.log(r);
+					if (r.code === 400) return reject(r.msg);
 					resolve();
 				});
 			}, 1000);
@@ -76,7 +85,7 @@ export const RegisterForm: React.FC = () => {
 			setTimeout(() => {
 				phoneOccupy({ phone: value }).then((r) => {
 					// console.log(r);
-					if (r.code === 404) return reject(new Error(r.msg));
+					if (r.code === 400) return reject(new Error(r.msg));
 					resolve();
 				});
 			}, 1000);
@@ -88,7 +97,7 @@ export const RegisterForm: React.FC = () => {
 			setTimeout(() => {
 				emailOccupy({ email: value }).then((r) => {
 					// console.log(r);
-					if (r.code === 404) return reject(new Error(r.msg));
+					if (r.code === 400) return reject(new Error(r.msg));
 					resolve();
 				});
 			}, 1000);
@@ -99,14 +108,18 @@ export const RegisterForm: React.FC = () => {
 		<Form.Item name="prefix" noStyle>
 			<Select style={{ width: 70 }}>
 				<Option value="86">+86</Option>
-				<Option value="87">+87</Option>
 			</Select>
 		</Form.Item>
 	);
+	useEffect(() => {
+		return () => {
+			clearInterval(verCountDown);
+			setVerDisable(false);
+		};
+	});
 	return (
 		<>
 			<Form
-				{...formItemLayout}
 				form={form}
 				name="register"
 				onFinish={onFinish}
@@ -120,9 +133,9 @@ export const RegisterForm: React.FC = () => {
 					label="用户名："
 					tooltip="你希望别人怎么称呼你?"
 					rules={[{ required: true, message: "用户名不能为空！" },
-						{
-							validator: validatorUserName
-						}
+					{
+						validator: validatorUserName
+					}
 					]}
 				>
 					<Input autoComplete={"username"} />
@@ -153,6 +166,27 @@ export const RegisterForm: React.FC = () => {
 					}]}
 				>
 					<Input autoComplete={"email"} />
+				</Form.Item>
+
+				<Form.Item
+					name="verify"
+					label="验证码："
+					dependencies={["verify"]}
+					rules={[
+						{
+							required: true,
+							message: "验证码不能为空!",
+						},
+						{
+							len: 6,
+							message: "验证码格式错误！"
+						}
+					]}
+				>
+					<div className="verify">
+						<Input autoComplete="verify" />
+						<Button className="verBtn" type="primary" onClick={verHandler} disabled={verDisable}>{verShow}</Button>
+					</div>
 				</Form.Item>
 
 				<Form.Item
