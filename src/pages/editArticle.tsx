@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import "../sass/pages/editArticle.sass";
 import { EditComponent } from "../components/common/editComponent";
 import { Input, Select } from "antd";
-import { getArticleType, getUserInfo } from "../config/api";
+import { getArticleType } from "../api/article";
+import { getUserInfo } from "../api/user";
 import PubSub from "pubsub-js";
 import type { UploadProps } from "antd";
 import { Button, message, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { baseUrl } from "../config/request";
+import { baseUrl } from "../utils/request";
 import Cookies from "js-cookie";
 import { SizeType } from "antd/es/config-provider/SizeContext";
 
@@ -20,11 +21,6 @@ export const EditArticle: React.FC = () => {
 	const history = useNavigate();
 	const [size] = useState<SizeType>("large");
 	const [icon, setIcon] = useState("http://39.101.72.168:81/image/icon.jpg");
-
-	getUserInfo().then((r) => {
-		if (r.code !== 200) return history("/");
-		if (r.data.limit !== 0 && r.data.limit !== 1) return history("/");
-	});
 
 	const props: UploadProps = {
 		name: "image",
@@ -71,6 +67,10 @@ export const EditArticle: React.FC = () => {
 	};
 
 	useEffect(() => {
+		getUserInfo().then((r) => {
+			if (r.code !== 200) return history("/");
+			if (r.data.limit !== 0 && r.data.limit !== 1) return history("/");
+		});
 		const saveShow = PubSub.subscribe("saveShow", () => {
 			setSaveShow(true);
 		});

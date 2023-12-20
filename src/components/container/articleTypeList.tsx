@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {Menu, MenuProps} from "antd";
-import {ArticleTypeInterface, SizeInterface} from "../../config/publicInterface";
+import React, { useEffect, useState } from "react";
+import { Menu, MenuProps } from "antd";
+import { ArticleTypeInterface, SizeInterface } from "../../config/publicInterface";
 import "../../sass/common/articleTypeList.sass";
-import {getArticleType} from "../../config/api";
-import {useNavigate} from "react-router-dom";
+import { getArticleType } from "../../api/article";
+import { useNavigate } from "react-router-dom";
 import PubSub from "pubsub-js";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -70,9 +70,10 @@ export const ArticleTypeList: React.FC<ChildProps> = ({ param, state }) => {
 	}, [theme]);
 	const selectHandler: (info: {
 		key: string;
-    keyPath: string[];
-    item: React.ReactInstance;
-    domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;}) => void = (ev) => {
+		keyPath: string[];
+		item: React.ReactInstance;
+		domEvent: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>;
+	}) => void = (ev) => {
 		// console.log(ev)
 		setSelectStatus(ev.key);
 		PubSub.publish("menuShow", false);

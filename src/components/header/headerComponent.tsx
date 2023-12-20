@@ -2,13 +2,13 @@
 import React from "react";
 // 引入组件css
 import "../../sass/header/headerComponent.sass";
-import {Link} from "react-router-dom";
-import {CommonInputBox} from "../common/commonInputBox";
-import {HeaderMenu} from "./headerMenu";
-import {SizeInterface} from "../../config/publicInterface";
-import {UserBtn} from "./userBtn";
-import {useState} from "react";
-import {motion} from "framer-motion";
+import { Link } from "react-router-dom";
+import { CommonInputBox } from "../common/commonInputBox";
+import { HeaderMenu } from "./headerMenu";
+import { SizeInterface } from "../../config/publicInterface";
+import { UserBtn } from "./userBtn";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface HeaderComponentParam extends SizeInterface {
 	menuShow: boolean

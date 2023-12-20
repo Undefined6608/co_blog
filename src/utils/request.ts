@@ -16,7 +16,7 @@ interface IRequestParams {
 }
 
 export const baseUrl = process.env.REACT_APP_DEBUG_URL;
-// const baseUrl = process.env.REACT_APP_RELEASE_URL;
+// export const baseUrl = process.env.REACT_APP_RELEASE_URL;
 // 封装请求方法
 function request<T>(
 	method: RequestMethod,

@@ -3,7 +3,7 @@ import { SizeInterface } from "../../config/publicInterface";
 import { MdEditor } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
 import "../../sass/common/editComponent.sass";
-import { addArticle, updateImg } from "../../config/api";
+import { addArticle, updateArticleImg } from "../../api/article";
 import PubSub from "pubsub-js";
 
 interface EditComponentParam extends SizeInterface {
@@ -40,7 +40,7 @@ export const EditComponent: React.FC<EditComponentParam> = ({ param, typeParam, 
 		};
 	}, [typeParam, contextParam]);
 	const onUploadImg = async (files: Array<File>, callback: (urls: string[]) => void) => {
-		const res = await updateImg(files);
+		const res = await updateArticleImg(files);
 		const urls = res.flatMap(item => item.data.map(innerItem => innerItem.url));
 		// res.map((item) => item.data.map((item) => item.url))
 		callback(urls);
@@ -65,7 +65,22 @@ export const EditComponent: React.FC<EditComponentParam> = ({ param, typeParam, 
 	};
 	return (
 		<>
-			<MdEditor className={type ? "show" : "edit"} modelValue={text} onChange={setText} onUploadImg={onUploadImg} style={{ width: param.width, height: param.height, marginTop: param.marginTop }} showCodeRowNumber={true} theme={theme} readOnly={type} previewTheme={previewTheme} onSave={() => { PubSub.publish("saveShow"); }} />
+			<MdEditor
+				className={type ? "show" : "edit"}
+				modelValue={text}
+				onChange={setText}
+				onUploadImg={onUploadImg}
+				style={{ width: param.width, height: param.height, marginTop: param.marginTop }}
+				showCodeRowNumber={true}
+				theme={theme}
+				readOnly={type}
+				previewTheme={previewTheme}
+				onSave={
+					() => {
+						PubSub.publish("saveShow");
+					}
+				}
+			/>
 		</>
 	);
 };

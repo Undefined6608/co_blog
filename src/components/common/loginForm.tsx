@@ -1,12 +1,14 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "../../sass/common/loginForm.sass";
-import {Button, Checkbox, Form, Input} from "antd";
-import {LockOutlined, UserOutlined} from "@ant-design/icons";
-import {formRule, LoginRegExp} from "../../config/rules";
-import {emailLogin, phoneLogin} from "../../config/api";
+import { Button, Checkbox, Form, Input } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { formRule, LoginRegExp } from "../../config/rules";
+import { emailLogin, phoneLogin } from "../../api/user";
 import PubSub from "pubsub-js";
-import {loginFail, loginSuccess} from "../../config/request";
-import {Link, useNavigate} from "react-router-dom";
+import { loginFail, loginSuccess } from "../../utils/request";
+import { Link, useNavigate } from "react-router-dom";
+import { md5 } from "js-md5";
+
 type FormValues = {
 	username: string,
 	password: string,
@@ -15,14 +17,14 @@ type FormValues = {
 export const LoginForm: React.FC = () => {
 	const [tips, setTips] = useState("");
 	const history = useNavigate();
-	
+
 	const onFinish: (values: FormValues) => void = (values) => {
 		if (!values.remember) return setTips("请勾选-同意用户协议");
 		if (LoginRegExp.illegal.test(values.username) || LoginRegExp.illegal.test(values.password)) return setTips("数据中含有非法字符！");
 		if (!LoginRegExp.phone.test(values.username) && !LoginRegExp.email.test(values.username)) return setTips("用户名格式错误！");
 		if (LoginRegExp.phone.test(values.username)) {
 			phoneLogin({
-				phone: values.username, password: values.password, remember: 1
+				phone: values.username, password: md5(values.password), remember: 1
 			}).then((r) => {
 				// console.log(r);
 				if (r?.code !== 200) return loginFail(new Error(r?.msg));

@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PubSub from "pubsub-js";
-import {TipComponent} from "./tipComponent";
+import { TipComponent } from "./tipComponent";
 import HeaderComponent from "../header/headerComponent";
-import {MenuComponent} from "../menu/menuComponent";
-import {LoginComponent} from "./loginComponent";
-import {ArticleType} from "./articleType";
+import { MenuComponent } from "../menu/menuComponent";
+import { LoginComponent } from "./loginComponent";
+import { ArticleType } from "./articleType";
 
 
 export const CommonComponent: React.FC = () => {

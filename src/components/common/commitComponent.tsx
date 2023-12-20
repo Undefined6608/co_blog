@@ -3,7 +3,8 @@ import { SizeInterface } from "../../config/publicInterface";
 import "../../sass/common/commitComponent.sass";
 import TextArea from "antd/es/input/TextArea";
 import { Avatar, Button, Card, Empty, List, Space, Tag } from "antd";
-import { addCommits, getCommits, getUserInfo } from "../../config/api";
+import { addCommits, getCommits } from "../../api/article";
+import { getUserInfo } from "../../api/user";
 import PubSub from "pubsub-js";
 
 interface CommitComponentParam extends SizeInterface {

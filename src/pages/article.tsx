@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Empty, FloatButton, Spin } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 
-import { getArticleMsg } from "../config/api";
+import { getArticleMsg } from "../api/article";
 import { ArticleMsgInterface } from "../config/publicInterface";
 import { ArticleBox } from "../components/container/articleBox";
 import CommitComponent from "../components/common/commitComponent";

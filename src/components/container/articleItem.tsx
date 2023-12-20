@@ -4,7 +4,7 @@ import "../../sass/container/articleItem.sass";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Space, Tag } from "antd";
-import { addRead } from "../../config/api";
+import { addRead } from "../../api/article";
 
 interface ArticleItemParam extends SizeInterface {
 	data: ArticleItemInterface

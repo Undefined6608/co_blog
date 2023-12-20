@@ -4,7 +4,7 @@ import { SizeInterface, UserInfoInterface } from "../../config/publicInterface";
 import { userSettingList } from "../../utils/staticData";
 import { Link } from "react-router-dom";
 import PubSub from "pubsub-js";
-import { getUserInfo, logout } from "../../config/api";
+import { getUserInfo, logout } from "../../api/user";
 import { LoginOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 

@@ -26,6 +26,7 @@
 		"github-markdown-css": "^5.2.0",
 		"http-proxy-middleware": "^2.0.6",
 		"js-cookie": "^3.0.5",
+		"js-md5": "^0.8.3",
 		"md-editor-rt": "^4.2.0",
 		"pubsub-js": "^1.9.4",
 		"react": "^18.2.0",

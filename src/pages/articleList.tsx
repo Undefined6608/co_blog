@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../sass/pages/commonPages.sass";
 import "../sass/pages/articleList.sass";
 import { ArticleListInterface } from "../config/publicInterface";
-import { getArticleList } from "../config/api";
+import { getArticleList } from "../api/article";
 import { useLocation } from "react-router-dom";
 import { ArticleItem } from "../components/container/articleItem";
 import { Divider, Empty, Spin } from "antd";
