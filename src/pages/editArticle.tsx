@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../sass/pages/editArticle.sass";
 import { EditComponent } from "../components/common/editComponent";
 import { Input, Select } from "antd";
-import { getArticleType } from "../api/article";
+import { addArticle, getArticleType } from "../api/article";
 import { getUserInfo } from "../api/user";
 import PubSub from "pubsub-js";
 import type { UploadProps } from "antd";
@@ -21,6 +21,7 @@ export const EditArticle: React.FC = () => {
 	const history = useNavigate();
 	const [size] = useState<SizeType>("large");
 	const [icon, setIcon] = useState("http://39.101.72.168:81/image/icon.jpg");
+	const [articleVal, setArticleVal] = useState("");
 
 	const props: UploadProps = {
 		name: "image",
@@ -63,7 +64,29 @@ export const EditArticle: React.FC = () => {
 
 	// 提交文章
 	const publish = () => {
-		PubSub.publish("saveArticle");
+		addArticleHandler();
+	};
+
+	const getArticleValue = (val: string) => {
+		setArticleVal(val);
+	};
+
+	const addArticleHandler = () => {
+		if (type === 0 || !title || !icon || !articleVal) return PubSub.publish("openTip", {
+			type: "warning",
+			msg: { message: "必填数据存在空值！", description: "请检查后再提交！" }
+		});
+		addArticle({ type: type, title: title, html: articleVal, icon: icon }).then((r) => {
+			if (r.code !== 200) return PubSub.publish("openTip", {
+				type: "error",
+				msg: { message: "保存失败！", description: r.msg }
+			});
+			PubSub.publish("openTip", {
+				type: "success",
+				msg: { message: "保存成功", description: "" }
+			});
+			setSaveShow(false);
+		});
 	};
 
 	useEffect(() => {
@@ -121,7 +144,7 @@ export const EditArticle: React.FC = () => {
 					null
 			}
 			<Button type="primary" size={size} onClick={save}>保存文章</Button>
-			<EditComponent param={{ width: "100%", height: "80vh", marginTop: "10px" }} typeParam={false} contextParam={""} updateData={{ type: type, title: title, icon: icon }} />
+			<EditComponent param={{ width: "100%", height: "80vh", marginTop: "10px" }} typeParam={false} contextParam={""} getArticleValue={getArticleValue} />
 		</div>
 	);
 };

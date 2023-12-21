@@ -6,6 +6,7 @@ import {
 } from "../config/publicInterface";
 import axios from "axios";
 import { requestError } from "./api";
+import Cookies from "js-cookie";
 /**
  * 获取文章类型列表
  * @returns 
@@ -57,33 +58,6 @@ export const getArticleMsg = (articleId: number) => {
 };
 
 /**
- * 上传用户头像
- * @param files 上传的文件
- * @returns 
- */
-export const updateUserImg = async (files: Array<File>) => {
-	return Promise.all<UploadImgInterface>(
-		files.map((file) => {
-			return new Promise((rev, rej) => {
-				const form = new FormData();
-				form.append("image", file);
-				axios
-					.post<UploadImgInterface>("/upload/userAvatar", form, {
-						headers: {
-							"Content-Type": "multipart/form-data"
-						}
-					})
-					.then((res) => {
-						if (res.status !== 200 && res.data.code !== 200) return rej(res);
-						return rev(res.data);
-					})
-					.catch((error) => rej(error));
-			});
-		})
-	);
-};
-
-/**
  * 上传文章图片
  * @param files 上传的文件
  * @returns 
@@ -94,10 +68,13 @@ export const updateArticleImg = async (files: Array<File>) => {
 			return new Promise((rev, rej) => {
 				const form = new FormData();
 				form.append("image", file);
-				axios
-					.post<UploadImgInterface>("/upload/articleIcon", form, {
+				axios.create({
+					baseURL: process.env.REACT_APP_DEBUG_URL,
+					timeout: 60000
+				}).put<UploadImgInterface>("/upload/articleIcon", form, {
 						headers: {
-							"Content-Type": "multipart/form-data"
+							"Content-Type": "multipart/form-data",
+							"Authorization": Cookies.get("token") || ""
 						}
 					})
 					.then((res) => {

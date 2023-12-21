@@ -2,9 +2,12 @@ import {get, post} from "../utils/request";
 import {
 	BaseInterface,
 	LoginInterface,
+	UploadImgInterface,
 	UserInfoInterface
 } from "../config/publicInterface";
 import { requestError } from "./api";
+import axios from "axios";
+import Cookies from "js-cookie";
 /**
  * 用户名查重
  * @param username 用户名
@@ -134,6 +137,36 @@ export const phoneLogin = async ({
 			return requestError(e);
 		});
 	});
+};
+
+/**
+ * 上传用户头像
+ * @param files 上传的文件
+ * @returns 
+ */
+export const updateUserImg = async (files: Array<File>) => {
+	return Promise.all<UploadImgInterface>(
+		files.map((file) => {
+			return new Promise((rev, rej) => {
+				const form = new FormData();
+				form.append("image", file);
+				axios.create({
+					baseURL: process.env.REACT_APP_DEBUG_URL,
+					timeout: 60000
+				}).put<UploadImgInterface>("/upload/userAvatar", form, {
+						headers: {
+							"Content-Type": "multipart/form-data",
+							"Authorization": Cookies.get("token") || ""
+						}
+					})
+					.then((res) => {
+						if (res.status !== 200 && res.data.code !== 200) return rej(res);
+						return rev(res.data);
+					})
+					.catch((error) => rej(error));
+			});
+		})
+	);
 };
 
 /**

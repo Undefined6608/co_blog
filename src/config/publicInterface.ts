@@ -31,11 +31,9 @@ export interface UserInfoInterface extends BaseInterface {
 }
 
 export interface UploadImgInterface extends BaseInterface {
-    data: [
-        {
-            url: string
-        }
-    ]
+	data: {
+		url: string
+	}
 }
 
 export interface UserSettingInterface {

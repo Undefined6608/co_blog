@@ -3,3 +3,4 @@ dist/
 craco.config.js
 codeSecurity.ts
 *.json
+src/api/proxy.js
