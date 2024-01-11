@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "../../sass/header/userBtn.sass";
-import { SizeInterface, UserInfoInterface } from "../../config/publicInterface";
+import { UserInfoInterface } from "../../config/responseInterface";
+import { SizeInterface } from "../../config/propsInterface";
 import { userSettingList } from "../../utils/staticData";
 import { Link } from "react-router-dom";
 import PubSub from "pubsub-js";
@@ -8,8 +9,15 @@ import { getUserInfo, logout } from "../../api/user";
 import { LoginOutlined } from "@ant-design/icons";
 import Cookies from "js-cookie";
 
+/**
+ * 用户按钮组件
+ * @prop param 基础样式
+ * @returns 
+ */
 export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
+	// 用户信息
 	const [userInfo, setUserInfo] = useState<UserInfoInterface | null>(null);
+	// 主题
 	const [theme, setTheme] = useState(false);
 	const getInfo = useCallback(() => {
 		getUserInfo().then((r) => {
@@ -20,12 +28,15 @@ export const UserBtn: React.FC<SizeInterface> = ({ param }) => {
 	useEffect(() => {
 		// 获取个人信息
 		getInfo();
+		// 订阅登录信息
 		const loginInfoToken = PubSub.subscribe("getLoginInfo", (_, val: boolean) => {
 			val ? getInfo() : setUserInfo(null);
 		});
+		// 订阅主题切换
 		const themeToken = PubSub.subscribe("setTheme", (_, val: boolean) => {
 			setTheme(val);
 		});
+		// 取消订阅
 		return () => {
 			PubSub.unsubscribe(loginInfoToken);
 			PubSub.unsubscribe(themeToken);

@@ -8,20 +8,31 @@ import PubSub from "pubsub-js";
 import { loginFail, loginSuccess } from "../../utils/request";
 import { Link, useNavigate } from "react-router-dom";
 import { md5 } from "js-md5";
+import { FormValues } from "../../config/requestInterface";
 
-type FormValues = {
-	username: string,
-	password: string,
-	remember: boolean
-}
+/**
+ * 登录表单组件
+ * @returns 登录表单
+ */
 export const LoginForm: React.FC = () => {
+	// 登录提示
 	const [tips, setTips] = useState("");
+	// 跳转路由
 	const history = useNavigate();
 
+	/**
+	 * 登录表单提交
+	 * @param values 表单数据
+	 * @returns 
+	 */
 	const onFinish: (values: FormValues) => void = (values) => {
+		// 验证数据
 		if (!values.remember) return setTips("请勾选-同意用户协议");
+		// 验证用户名格式
 		if (LoginRegExp.illegal.test(values.username) || LoginRegExp.illegal.test(values.password)) return setTips("数据中含有非法字符！");
+		// 验证电话号码格式
 		if (!LoginRegExp.phone.test(values.username) && !LoginRegExp.email.test(values.username)) return setTips("用户名格式错误！");
+		// 电话号码登录
 		if (LoginRegExp.phone.test(values.username)) {
 			phoneLogin({
 				phone: values.username, password: md5(values.password), remember: 1
@@ -31,6 +42,7 @@ export const LoginForm: React.FC = () => {
 				loginSuccess(r.data.token);
 			});
 		}
+		// 邮箱登录
 		if (LoginRegExp.email.test(values.username)) {
 			emailLogin({ email: values.username, password: values.password, remember: 1 }).then((r) => {
 				if (r?.code !== 200) return loginFail(new Error(r?.msg));

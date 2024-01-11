@@ -1,9 +1,12 @@
+// 登录验证规则
 export const LoginRegExp = {
 	illegal: /(.*=.*--.*)|(.*(\+|-).*)|(.*\w+(%|\$|#|&)\w+.*)|(.*\|\|.*)|(.*\s+(and|or)\s+.*)|(.*\b(select|update|union|and|or|delete|insert|trancate|char|into|substr|ascii|declare|exec|count|master|info|drop|execute)\b.*)/i,
 	email: /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+$/,
 	phone: /^1[3456789]\d{9}$/,
 	username: /(^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+)|(^1[3456789]\d{9})$/
 };
+
+// 表单验证规则
 export const formRule = {
 	nickName: [{ required: true, message: "用户名不能为空！" }],
 	phone: [{ required: true, message: "电话号码不能为空！" }, {

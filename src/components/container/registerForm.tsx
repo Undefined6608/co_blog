@@ -13,17 +13,10 @@ import { emailOccupy, getEmailCode, phoneOccupy, register, userNameOccupy } from
 import { requestError } from "../../api/api";
 import PubSub from "pubsub-js";
 import { md5 } from "js-md5";
+import { formData } from "../../config/requestInterface";
 
-const { Option } = Select;
-
-type formData = {
-	username: string,
-	password: string,
-	confirm: string,
-	verify: number,
-	phone: string,
-	email: string
-};
+// 选项类型
+export const { Option } = Select;
 
 export const RegisterForm: React.FC = () => {
 	const [form] = Form.useForm();

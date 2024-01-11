@@ -1,13 +1,14 @@
 import React from "react";
-import {SizeInterface} from "../../config/publicInterface";
 import "../../sass/container/articleBox.sass";
 import "github-markdown-css/github-markdown-light.css";
-import {EditComponent} from "../common/editComponent";
+import { EditComponent } from "../common/editComponent";
+import { ArticleBoxParam } from "../../config/propsInterface";
 
-interface ArticleBoxParam extends SizeInterface {
-	context: string
-}
-
+/**
+ * 文章盒子组件
+ * @param param 文章盒子参数
+ * @returns 
+ */
 export const ArticleBox: React.FC<ArticleBoxParam> = ({ param, context }) => {
 	return (
 		<div className={"article_Box"} style={{ width: param.width, minHeight: param.height, marginTop: param.marginTop }}>

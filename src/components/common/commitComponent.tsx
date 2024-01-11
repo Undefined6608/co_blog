@@ -1,42 +1,41 @@
 import React, { forwardRef, useCallback, useEffect, useState } from "react";
-import { SizeInterface } from "../../config/publicInterface";
 import "../../sass/common/commitComponent.sass";
 import TextArea from "antd/es/input/TextArea";
 import { Avatar, Button, Card, Empty, List, Space, Tag } from "antd";
 import { addCommits, getCommits } from "../../api/article";
 import { getUserInfo } from "../../api/user";
 import PubSub from "pubsub-js";
+import { CommitComponentParam } from "../../config/propsInterface";
+import { commitType } from "../../config/requestInterface";
 
-interface CommitComponentParam extends SizeInterface {
-	articleId: number
-}
-
-type commitType = {
-	id: number,
-	// 用户名
-	title: string,
-	// 会员
-	member: number,
-	// 积分
-	integral: number
-	// 用户头像
-	userAvatar: string,
-	// 评论数据
-	context: string
-}
-
+/**
+ * 评论组件
+ * @param props 评论组件参数
+ * @param ref DOM参数
+ * @returns 
+ */
 const CommitComponent: React.ForwardRefRenderFunction<HTMLDivElement, CommitComponentParam> = (props, ref) => {
+	// 获取评论组件参数
 	const { param, articleId } = props;
+	// 评论组件状态
 	const [commitStatus, setArticleStatus] = useState(false);
+	// 评论列表
 	const [commits, setCommits] = useState<Array<commitType>>();
+	// 提交评论锁
 	const [submitLock, setSubmitLock] = useState(true);
+	// 评论内容
 	const [commitVal, setCommitVal] = useState("");
+	// 登录状态
 	const [loginState, setLoginState] = useState(false);
+
+	// 获取评论列表信息,在articleId变化时执行
 	const getInfo = useCallback(() => {
+		// 获取评论列表信息
 		getCommits(articleId).then((r) => {
 			if (r.code !== 200) return setArticleStatus(false);
 			// console.log(r);
 			// const tempList: Array<commitType> = r.data.map((item) => {
+			// 将获取的值转化为需要的数组
 			const tempList: Array<commitType> = r.data.rows.map((item) => {
 				return {
 					id: item.id,
@@ -47,36 +46,52 @@ const CommitComponent: React.ForwardRefRenderFunction<HTMLDivElement, CommitComp
 					context: item.context
 				};
 			});
+			// 设置评论列表
 			setCommits(tempList);
+			// 设置评论组件状态
 			setArticleStatus(true);
 		});
 	}, [articleId]);
+
 	useEffect(() => {
+		// 获取用户信息
 		getUserInfo().then((r) => {
 			if (r.code !== 200) return setLoginState(false);
 			if (r.code === 200) return setLoginState(true);
 		});
+		// 监听登录状态
 		const commitLoginToken = PubSub.subscribe("commitLoginStatus", (_, val: boolean) => {
 			setLoginState(val);
 		});
+		// 监听文章Id变化
 		getInfo();
 
+		// 处理副作用
 		return () => {
 			PubSub.unsubscribe(commitLoginToken);
 		};
 	}, [articleId, getInfo]);
 
+	/**
+	 * 提交评论
+	 * @returns 
+	 */
 	const updateCommit = () => {
+		// 判断提交锁是否开启
 		if (!submitLock) return PubSub.publish("openTip", {
 			type: "warning",
 			msg: { message: "评论失败！", description: "评论过于频繁，请稍后重试" }
 		});
+		// 判断评论内容是否为空
 		if (!commitVal) return;
+		// 设置提交锁锁定
 		setSubmitLock(false);
+		// 设置提交锁解锁
 		const timer = setTimeout(() => {
 			setSubmitLock(true);
 			clearTimeout(timer);
 		}, 10000);
+		// 提交评论
 		addCommits({ articleId: articleId, context: commitVal }).then((r) => {
 			if (r.code !== 200) return PubSub.publish("openTip", {
 				type: "warning",
@@ -86,10 +101,12 @@ const CommitComponent: React.ForwardRefRenderFunction<HTMLDivElement, CommitComp
 				type: "success",
 				msg: { message: "评论成功！", description: "" }
 			});
+			// 刷新评论列表
 			getInfo();
 		});
 	};
 
+	// 登录
 	const goLogin = () => {
 		PubSub.publish("loginStatus", true);
 	};

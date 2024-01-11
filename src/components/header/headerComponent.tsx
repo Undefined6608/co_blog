@@ -5,29 +5,52 @@ import "../../sass/header/headerComponent.sass";
 import { Link } from "react-router-dom";
 import { CommonInputBox } from "../common/commonInputBox";
 import { HeaderMenu } from "./headerMenu";
-import { SizeInterface } from "../../config/publicInterface";
 import { UserBtn } from "./userBtn";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { HeaderComponentParam } from "../../config/propsInterface";
 
-interface HeaderComponentParam extends SizeInterface {
-	menuShow: boolean
-}
-
+/**
+ * 头部组件
+ * @props param header组件参数
+ * @props menuShow 菜单显示状态
+ * @returns 
+ */
 const HeaderComponent: React.FC<HeaderComponentParam> = ({ param, menuShow }) => {
+	// 状态变量
 	const [isOn, setIsOn] = useState(false);
+	// 切换主题
 	const toggleSwitch = () => {
+		// 主题切换
 		const conTemp = !isOn;
+		// 发布主题切换消息
 		PubSub.publish("theme", conTemp);
+		// 发布主题切换消息
 		PubSub.publish("setTheme", conTemp);
+		// 设置状态
 		setIsOn(conTemp);
 	};
+
+	/**
+	 * 动画参数
+	 * @property {string} type 动画类型
+	 * @property {number} stiffness 弹性
+	 * @property {number} damping 阻尼
+	 */
 	const spring = {
+		// 动画类型
 		type: "spring",
+		// 弹性
 		stiffness: 700,
+		// 阻尼
 		damping: 30
 	};
+
+	/**
+	 * 点击事件
+	 */
 	const click = () => {
+		// 跳转到github
 		window.location.href = "https://github.com/Undefined6608";
 	};
 	return (

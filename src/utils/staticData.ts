@@ -1,4 +1,4 @@
-import {UserSettingInterface} from "../config/publicInterface";
+import {UserSettingInterface} from "../config/responseInterface";
 
 export const userSettingList: UserSettingInterface[] = [
 	{

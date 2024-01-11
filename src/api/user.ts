@@ -4,10 +4,11 @@ import {
 	LoginInterface,
 	UploadImgInterface,
 	UserInfoInterface
-} from "../config/publicInterface";
+} from "../config/responseInterface";
 import { requestError } from "./api";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { PhoneLoginType, RegisterType } from "../config/requestInterface";
 /**
  * 用户名查重
  * @param username 用户名
@@ -51,15 +52,6 @@ export const emailOccupy = async ({ email }: { email: string }) => {
 			reject(e);
 		});
 	});
-};
-
-type RegisterType = {
-	username: string,
-	password: string,
-	verPassword: string,
-	phone: string,
-	email: string,
-	emailCode: number
 };
 
 /**
@@ -112,11 +104,6 @@ export const getEmailCode = async ({ email }: { email: string }) => {
 	});
 };
 
-type PhoneLoginType = {
-	phone: string,
-	password: string,
-	remember: number
-};
 /**
  * 电话号码登录
  * @param {PhoneLoginType} 用户信息

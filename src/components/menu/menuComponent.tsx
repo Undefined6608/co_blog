@@ -1,19 +1,20 @@
 import React from "react";
-import {CommonInputBox} from "../common/commonInputBox";
-import {SizeInterface} from "../../config/publicInterface";
+import { CommonInputBox } from "../common/commonInputBox";
 import "../../sass/menu/menuComponent.sass";
-import {ArticleTypeList} from "../container/articleTypeList";
-import {Link} from "react-router-dom";
+import { ArticleTypeList } from "../container/articleTypeList";
+import { Link } from "react-router-dom";
 import PubSub from "pubsub-js";
+import { MenuComponentParam } from "../../config/propsInterface";
 
-interface MenuComponentParam extends SizeInterface {
-    showParam: boolean
-}
-
+/**
+ * 菜单组件
+ * @prop param 基础样式
+ * @returns 
+ */
 export const MenuComponent: React.FC<MenuComponentParam> = ({ param, showParam }) => {
+	// 设置状态
 	const setState = () => {
-		console.log("123");
-		
+		// 这是一个空方法
 	};
 	return (
 		<div className={showParam ? "menuComponent showMenu" : "menuComponent"}

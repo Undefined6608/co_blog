@@ -1,21 +1,16 @@
 import React, { useMemo, useState } from "react";
 import { Watermark } from "antd";
-import { Color } from "antd/es/color-picker";
 import "../sass/pages/commonPages.sass";
 import "../sass/pages/about.sass";
+import { WatermarkConfig } from "../config/statusInterface";
 
-interface WatermarkConfig {
-    content: string;
-    color: string | Color;
-    fontSize: number;
-    zIndex: number;
-    rotate: number;
-    gap: [number, number];
-    offset?: [number, number];
-}
-
+/**
+ * 关于页面
+ * @returns 
+ */
 export const About: React.FC = () => {
-	const [ config ] = useState< WatermarkConfig >({
+	// 水印配置
+	const [config] = useState<WatermarkConfig>({
 		content: "Ant Design",
 		color: "rgba(0, 0, 0, 0.15)",
 		fontSize: 16,
@@ -24,7 +19,9 @@ export const About: React.FC = () => {
 		gap: [100, 100],
 		offset: undefined,
 	});
+	// 水印配置
 	const { content, color, fontSize, zIndex, rotate, gap, offset } = config;
+	// 水印配置
 	const watermarkProps = useMemo(
 		() => ({
 			content,
@@ -39,6 +36,7 @@ export const About: React.FC = () => {
 		}),
 		[color, content, fontSize, gap, offset, rotate, zIndex],
 	);
+
 	return (
 		<div className={"commonPages"}>
 			<Watermark {...watermarkProps}>

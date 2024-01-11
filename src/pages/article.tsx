@@ -4,23 +4,34 @@ import { Empty, FloatButton, Spin } from "antd";
 import { CommentOutlined } from "@ant-design/icons";
 
 import { getArticleMsg } from "../api/article";
-import { ArticleMsgInterface } from "../config/publicInterface";
+import { ArticleMsgInterface } from "../config/responseInterface";
 import { ArticleBox } from "../components/container/articleBox";
 import CommitComponent from "../components/common/commitComponent";
 
 import "../sass/pages/commonPages.sass";
 import "../sass/pages/article.sass";
 
+/**
+ * 文章页面
+ * @returns 
+ */
 export const Article: React.FC = () => {
+	// 文章数据
 	const [articleMsg, setArticleMsg] = useState<ArticleMsgInterface>();
+	// 加载中
 	const [loading, setLoading] = useState(false);
+	// 路由参数
 	const { state } = useLocation();
+	// 评论滚动条
 	const commentRef = useRef<HTMLDivElement>(null);
+	// 跳转评论
 	const goComment = () => {
 		if (!commentRef.current) return;
 		commentRef.current.scrollIntoView({ behavior: "smooth" });
 	};
+
 	useEffect(() => {
+		// 获取文章数据
 		getArticleMsg(state.articleId).then((r) => {
 			// console.log(r);
 			if (r.code !== 200) return setArticleMsg(undefined);
@@ -30,6 +41,7 @@ export const Article: React.FC = () => {
 			setLoading(false);
 		});
 	}, [state.articleId]);
+
 	return (
 		<div className={"commonPages article"}>
 			{

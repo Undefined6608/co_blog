@@ -13,25 +13,44 @@ import { baseUrl } from "../utils/request";
 import Cookies from "js-cookie";
 import { SizeType } from "antd/es/config-provider/SizeContext";
 
+/**
+ * 编辑页面
+ * @returns 
+ */
 export const EditArticle: React.FC = () => {
+	// 获取文章类型列表
 	const [typeList, setTypeList] = useState<Array<{ value: number, label: string }>>();
+	// 文章类型
 	const [type, setType] = useState(0);
+	// 文章标题
 	const [title, setTitle] = useState("");
+	// 保存状态
 	const [saveShow, setSaveShow] = useState(false);
+	// 路由
 	const history = useNavigate();
+	// 窗口大小
 	const [size] = useState<SizeType>("large");
+	// 图标
 	const [icon, setIcon] = useState("http://39.101.72.168:81/image/icon.jpg");
+	// 文章内容
 	const [articleVal, setArticleVal] = useState("");
 
+	/**
+	 * 上传图片组件参数
+	 */
 	const props: UploadProps = {
+		// 上传名称
 		name: "image",
+		// 上传地址
 		action: baseUrl + "/upload/articleIcon",
-		// action: "/api/upload/img",
+		// 上传类型
 		method: "PUT",
+		// 上传请求头
 		headers: {
 			ContentType: "multipart/form-data",
 			Authorization: Cookies.get("token") || ""
 		},
+		// 上传文件判断类型
 		beforeUpload: (file) => {
 			const isPNG = file.type === "image/png";
 			if (!isPNG) {
@@ -45,6 +64,7 @@ export const EditArticle: React.FC = () => {
 			}
 			return isPNG || Upload.LIST_IGNORE;
 		},
+		// 上传成功
 		onChange(info) {
 			console.log(info);
 			if (info.file.status === "done") {
@@ -57,25 +77,38 @@ export const EditArticle: React.FC = () => {
 		},
 	};
 
-	// 点击保存按钮
+	/**
+	 * 点击保存按钮
+	 */
 	const save = () => {
 		setSaveShow(true);
 	};
 
-	// 提交文章
+	/**
+	 * 提交文章
+	 */
 	const publish = () => {
 		addArticleHandler();
 	};
 
+	/**
+	 * 获取文章内容
+	 * @param val 内容数据
+	 */
 	const getArticleValue = (val: string) => {
 		setArticleVal(val);
 	};
 
+	/**
+	 * 上传文章
+	 * @returns 
+	 */
 	const addArticleHandler = () => {
 		if (type === 0 || !title || !icon || !articleVal) return PubSub.publish("openTip", {
 			type: "warning",
 			msg: { message: "必填数据存在空值！", description: "请检查后再提交！" }
 		});
+		// 提交文章
 		addArticle({ type: type, title: title, html: articleVal, icon: icon }).then((r) => {
 			if (r.code !== 200) return PubSub.publish("openTip", {
 				type: "error",
@@ -90,13 +123,16 @@ export const EditArticle: React.FC = () => {
 	};
 
 	useEffect(() => {
+		// 获取用户信息
 		getUserInfo().then((r) => {
 			if (r.code !== 200) return history("/");
 			if (r.data.limit !== 0 && r.data.limit !== 1) return history("/");
 		});
+		// 订阅保存按钮
 		const saveShow = PubSub.subscribe("saveShow", () => {
 			setSaveShow(true);
 		});
+		// 获取文章类型列表
 		getArticleType().then((r) => {
 			// console.log(r);
 			if (r.code !== 200) return PubSub.publish("openTip", {
@@ -112,6 +148,7 @@ export const EditArticle: React.FC = () => {
 			PubSub.unsubscribe(saveShow);
 		};
 	}, []);
+
 	return (
 		<div className={"commonPages editArticleBox"}>
 			{

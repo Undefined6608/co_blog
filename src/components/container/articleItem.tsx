@@ -1,20 +1,27 @@
 import React from "react";
-import { ArticleItemInterface, SizeInterface } from "../../config/publicInterface";
+import { ArticleItemParam } from "../../config/propsInterface";
 import "../../sass/container/articleItem.sass";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Space, Tag } from "antd";
 import { addRead } from "../../api/article";
 
-interface ArticleItemParam extends SizeInterface {
-	data: ArticleItemInterface
-}
-
+/**
+ * 文章列表项组件
+ * @param param 文章参数
+ * @returns 
+ */
 export const ArticleItem: React.FC<ArticleItemParam> = ({ param, data }) => {
+	// 路由导航
 	const history = useNavigate();
 
+	/**
+	 * 点击文章跳转到文章详情页
+	 */
 	const handlerArticle = () => {
+		// 增加阅读数
 		addRead(data.id);
+		// 跳转到文章详情页
 		history("/article", { state: { articleId: data.id } });
 	};
 	return (

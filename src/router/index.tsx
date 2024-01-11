@@ -1,17 +1,17 @@
 // 引入React-Router
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 // 引入组件
-import {Home} from "../pages/Home";
-import {CommonComponent} from "../components/common/commonComponent";
+import { Home } from "../pages/Home";
+import { CommonComponent } from "../components/common/commonComponent";
 import React from "react";
-import {Register} from "../pages/register";
-import {Forget} from "../pages/forget";
-import {Article} from "../pages/article";
-import {ArticleList} from "../pages/articleList";
-import {EditArticle} from "../pages/editArticle";
-import {About} from "../pages/about";
-import {FeedBack} from "../pages/feedBack";
-import {UserSetting} from "../pages/userSetting";
+import { Register } from "../pages/register";
+import { Forget } from "../pages/forget";
+import { Article } from "../pages/article";
+import { ArticleList } from "../pages/articleList";
+import { EditArticle } from "../pages/editArticle";
+import { About } from "../pages/about";
+import { FeedBack } from "../pages/feedBack";
+import { UserSetting } from "../pages/userSetting";
 
 export const AppRouter = () => {
 

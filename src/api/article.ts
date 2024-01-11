@@ -3,13 +3,13 @@ import {
 	ArticleListInterface, ArticleMsgInterface,
 	ArticleTypeInterface,
 	BaseInterface, CommitsInterface, UploadImgInterface
-} from "../config/publicInterface";
+} from "../config/responseInterface";
 import axios from "axios";
 import { requestError } from "./api";
 import Cookies from "js-cookie";
 /**
  * 获取文章类型列表
- * @returns 
+ * @returns
  */
 export const getArticleType = () => {
 	return new Promise<ArticleTypeInterface>((resolve, reject) => {

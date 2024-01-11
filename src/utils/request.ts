@@ -17,7 +17,14 @@ interface IRequestParams {
 
 export const baseUrl = process.env.REACT_APP_DEBUG_URL;
 // export const baseUrl = process.env.REACT_APP_RELEASE_URL;
-// 封装请求方法
+
+/**
+ * 请求方法
+ * @param method 请求方法名
+ * @param url 请求地址
+ * @param data 请求参数
+ * @param token token
+ */
 function request<T>(
 	method: RequestMethod,
 	url: string,
@@ -34,26 +41,50 @@ function request<T>(
 	});
 }
 
-// GET 请求方法
+/**
+ * get 请求方法
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns 
+ */
 export function get<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
 	return request<T>(RequestMethod.Get, url, params, Cookies.get("token"));
 }
 
-// POST 请求方法
+/**
+ * post 请求方法
+ * @param url 请求地址
+ * @param data 请求参数
+ * @returns 
+ */
 export function post<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
 	return request<T>(RequestMethod.Post, url, data, Cookies.get("token"));
 }
 
-// PUT 请求方法
+/**
+ * put 请求方法
+ * @param url 请求地址
+ * @param data 请求参数
+ * @returns 
+ */
 export function put<T>(url: string, data?: IRequestParams): AxiosPromise<T> {
 	return request<T>(RequestMethod.Put, url, data, Cookies.get("token"));
 }
 
-// DELETE 请求方法
+/**
+ * delete 请求方法
+ * @param url 请求地址
+ * @param params 请求参数
+ * @returns 
+ */
 export function del<T>(url: string, params?: IRequestParams): AxiosPromise<T> {
 	return request<T>(RequestMethod.Delete, url, params, Cookies.get("token"));
 }
 
+/**
+ * 登录成功
+ * @param token token
+ */
 export const loginSuccess = (token: string) => {
 	PubSub.publish("openTip", {
 		type: "success",
@@ -65,6 +96,10 @@ export const loginSuccess = (token: string) => {
 	PubSub.publish("commitLoginStatus", true);
 };
 
+/**
+ * 登录失败
+ * @param e 错误信息
+ */
 export const loginFail = (e: Error) => {
 	PubSub.publish("openTip", {
 		type: "warning",

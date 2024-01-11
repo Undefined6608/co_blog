@@ -1,23 +1,24 @@
-export interface SizeInterface {
-    param: {
-        width: string,
-        height: string,
-        marginTop: string
-    }
-}
-
+/**
+ * 基础请求返回值类型
+ */
 export interface BaseInterface {
     code: number,
     msg: string,
     data: object
 }
 
+/**
+ * 登录接口返回值类型
+ */
 export interface LoginInterface extends BaseInterface {
     data:{
         token: string
     }
 }
 
+/**
+ * 用户信息接口返回值类型
+ */
 export interface UserInfoInterface extends BaseInterface {
     data: {
         username: string,
@@ -30,12 +31,18 @@ export interface UserInfoInterface extends BaseInterface {
     }
 }
 
+/**
+ * 图片上传接口返回值类型
+ */
 export interface UploadImgInterface extends BaseInterface {
 	data: {
 		url: string
 	}
 }
 
+/**
+ * 用户设置接口返回值类型
+ */
 export interface UserSettingInterface {
     id: string,
     icon: string,
@@ -43,10 +50,11 @@ export interface UserSettingInterface {
     href: string
 }
 
-
+/**
+ * 文章分类接口返回值类型
+ */
 export interface ArticleTypeInterface extends BaseInterface {
     data: {
-        // articleTypeList: [
         articleType: [
             {
                 id: number,
@@ -60,6 +68,9 @@ export interface ArticleTypeInterface extends BaseInterface {
     }
 }
 
+/**
+ * 文章列表接口返回值类型
+ */
 export interface ArticleItemInterface {
     id: number,
     user_name: string,
@@ -73,13 +84,18 @@ export interface ArticleItemInterface {
 	integral: number
 }
 
+/**
+ * 文章列表接口返回值类型
+ */
 export interface ArticleListInterface extends BaseInterface {
     data: {
-        // articleList: ArticleItemInterface[]
         rows: ArticleItemInterface[]
     }
 }
 
+/**
+ * 文章详情接口返回值类型
+ */
 export interface ArticleMsgInterface extends BaseInterface {
     data: {
         data:{
@@ -91,16 +107,12 @@ export interface ArticleMsgInterface extends BaseInterface {
             date: string,
             icon: string
         }
-        /*id: number,
-        userName: string,
-        read: number,
-        title: string,
-        context: string,
-        date: string,
-        icon: string*/
     }
 }
 
+/**
+ * 评论列表接口返回值类型
+ */
 export interface CommitsInterface extends BaseInterface {
     data: {
         rows:[
