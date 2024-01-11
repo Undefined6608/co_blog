@@ -31,7 +31,7 @@ module.exports = {
 	},
 	devServer: {
 		host: '0.0.0.0',
-		port: 3000,
+		port: 80,
 		proxy: {
 			'/api': {
 				// target: 'http://39.101.72.168:6005',

@@ -14,9 +14,24 @@
 	},
 	"rules": {
 		// 在这里添加或覆盖规则
-		"quotes": ["error", "double"],
-		"semi": ["error", "always"],
-		"keyword-spacing": ["error", { "before": true }]
+		"quotes": [
+			"error",
+			"double"
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"keyword-spacing": [
+			"error",
+			{
+				"before": true
+			}
+		],
+		"complexity": [
+			"error",
+			10
+		]
 	},
 	"settings": {
 		"react": {
