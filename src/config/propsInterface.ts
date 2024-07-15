@@ -5,17 +5,17 @@ import { ArticleItemInterface } from "./responseInterface";
  * @prop {object} param 组件样式
  */
 export interface SizeInterface {
-	/**
-	 * 组件样式
-	 * @prop {string} width 宽度
-	 * @prop {string} height 高度
-	 * @prop {string} marginTop 上边距
-	 */
-	param: {
-		width: string,
-		height: string,
-        marginTop: string
-    }
+  /**
+   * 组件样式
+   * @prop {string} width 宽度
+   * @prop {string} height 高度
+   * @prop {string} marginTop 上边距
+   */
+  param: {
+    width: string;
+    height: string;
+    marginTop: string;
+  };
 }
 
 /**
@@ -24,8 +24,8 @@ export interface SizeInterface {
  * @prop {number} articleId 文章id
  */
 export interface CommitComponentParam extends SizeInterface {
-	// 文章id
-	articleId: number
+  // 文章id
+  articleId: number;
 }
 
 /**
@@ -36,9 +36,9 @@ export interface CommitComponentParam extends SizeInterface {
  * @prop {function} getArticleValue 获取文章内容
  */
 export interface EditComponentParam extends SizeInterface {
-	typeParam: boolean,
-	contextParam: string,
-	getArticleValue?: (val: string) => void
+  typeParam: boolean;
+  contextParam: string;
+  getArticleValue?: (val: string) => void;
 }
 
 /**
@@ -50,7 +50,7 @@ export interface EditComponentParam extends SizeInterface {
  * @prop {string} context 文章内容
  */
 export interface ArticleBoxParam extends SizeInterface {
-	context: string
+  context: string;
 }
 
 /**
@@ -60,7 +60,7 @@ export interface ArticleBoxParam extends SizeInterface {
  * @returns 文章列表项
  */
 export interface ArticleItemParam extends SizeInterface {
-	data: ArticleItemInterface
+  data: ArticleItemInterface;
 }
 
 /**
@@ -70,8 +70,8 @@ export interface ArticleItemParam extends SizeInterface {
  * @prop {React.Dispatch<React.SetStateAction<boolean>>} setState 设置state的函数
  */
 export interface ChildProps extends SizeInterface {
-	state: boolean;
-	setState: React.Dispatch<React.SetStateAction<boolean>>;
+  state: boolean;
+  setState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 /**
@@ -80,7 +80,7 @@ export interface ChildProps extends SizeInterface {
  * @prop menuShow: 菜单是否显示
  */
 export interface HeaderComponentParam extends SizeInterface {
-	menuShow: boolean
+  menuShow: boolean;
 }
 
 /**
@@ -89,7 +89,7 @@ export interface HeaderComponentParam extends SizeInterface {
  * @prop menuShow 菜单是否显示
  */
 export interface HeaderMenuParam extends SizeInterface {
-	menuShow: boolean
+  menuShow: boolean;
 }
 
 /**
@@ -98,5 +98,5 @@ export interface HeaderMenuParam extends SizeInterface {
  * @prop {boolean} showParam 是否显示菜单
  */
 export interface MenuComponentParam extends SizeInterface {
-	showParam: boolean
+  showParam: boolean;
 }

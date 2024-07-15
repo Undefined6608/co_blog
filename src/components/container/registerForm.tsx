@@ -186,7 +186,7 @@ export const RegisterForm: React.FC = () => {
 				className={"registerForm"}
 				scrollToFirstError
 				initialValues={{ prefix: "86" }}
-				validateTrigger={"onBlur"}
+				validateTrigger={"onChange"}
 			>
 				<Form.Item
 					name="username"

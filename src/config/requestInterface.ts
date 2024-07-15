@@ -2,39 +2,39 @@ import { MenuProps } from "antd";
 
 // 注册接口类型
 export type RegisterType = {
-	username: string,
-	password: string,
-	verPassword: string,
-	phone: string,
-	email: string,
-	emailCode: number
+  username: string;
+  password: string;
+  verPassword: string;
+  phone: string;
+  email: string;
+  emailCode: number;
 };
 
 /**
  * 电话号码登录参数类型
  * @param {PhoneLoginType} 用户信息
- * @returns 
+ * @returns
  */
 export type PhoneLoginType = {
-	phone: string,
-	password: string,
-	remember: number
+  phone: string;
+  password: string;
+  remember: number;
 };
 
 // 评论类型声明
 export type commitType = {
-	id: number,
-	// 用户名
-	title: string,
-	// 会员
-	member: number,
-	// 积分
-	integral: number
-	// 用户头像
-	userAvatar: string,
-	// 评论数据
-	context: string
-}
+  id: number;
+  // 用户名
+  title: string;
+  // 会员
+  member: number;
+  // 积分
+  integral: number;
+  // 用户头像
+  userAvatar: string;
+  // 评论数据
+  context: string;
+};
 
 /**
  * 登录表单类型
@@ -43,15 +43,15 @@ export type commitType = {
  * @property {boolean} remember 同意
  */
 export type FormValues = {
-	username: string,
-	password: string,
-	remember: boolean
-}
+  username: string;
+  password: string;
+  remember: boolean;
+};
 
 // 通知类型
 export type NotificationType = "success" | "info" | "warning" | "error";
 // 消息类型
-export type MsgType = { message: string, description: string };
+export type MsgType = { message: string; description: string };
 
 /**
  * 提示框组件参数类型
@@ -59,9 +59,9 @@ export type MsgType = { message: string, description: string };
  * @property {MsgType} msg 提示信息
  */
 export type TipComponentParam = {
-	type: NotificationType,
-	msg: MsgType
-}
+  type: NotificationType;
+  msg: MsgType;
+};
 
 /**
  * 声明菜单项类型
@@ -78,19 +78,19 @@ export type MenuItem = Required<MenuProps>["items"][number];
  * @returns 返回文章类型对象
  */
 export function getItem(
-	label: React.ReactNode,
-	key: React.Key,
-	icon?: React.ReactNode,
-	children?: MenuItem[],
-	type?: "group",
+  label: React.ReactNode,
+  key: React.Key,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: "group",
 ): MenuItem {
-	return {
-		key,
-		icon,
-		children,
-		label,
-		type,
-	} as MenuItem;
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
 }
 
 /**
@@ -103,10 +103,10 @@ export function getItem(
  * @property {string} email 邮箱
  */
 export type formData = {
-	username: string,
-	password: string,
-	confirm: string,
-	verify: number,
-	phone: string,
-	email: string
+  username: string;
+  password: string;
+  confirm: string;
+  verify: number;
+  phone: string;
+  email: string;
 };

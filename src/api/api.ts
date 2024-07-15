@@ -5,8 +5,8 @@ import PubSub from "pubsub-js";
  * @param e 错误数据
  */
 export const requestError = (e: Error) => {
-	PubSub.publish("openTip", {
-		type: "error",
-		msg: { message: "请求失败", description: e.message }
-	});
+  PubSub.publish("openTip", {
+    type: "error",
+    msg: { message: "请求失败", description: e.message },
+  });
 };

@@ -4,12 +4,8 @@ import "../sass/pages/userSetting.sass";
 
 /**
  * 用户设置页面
- * @returns 
+ * @returns
  */
 export const UserSetting: React.FC = () => {
-	return (
-		<div className={"commonPages userSetting"}>
-			用户设置
-		</div>
-	);
+  return <div className={"commonPages userSetting"}>用户设置</div>;
 };

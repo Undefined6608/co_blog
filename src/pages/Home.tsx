@@ -4,13 +4,8 @@ import "../sass/pages/home.sass";
 
 /**
  * 主页
- * @returns 
+ * @returns
  */
 export const Home: React.FC = () => {
-
-	return (
-		<div className={"commonPages home"}>
-			主页
-		</div>
-	);
+  return <div className={"commonPages home"}>主页</div>;
 };

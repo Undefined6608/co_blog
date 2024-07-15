@@ -14,21 +14,20 @@ import { FeedBack } from "../pages/feedBack";
 import { UserSetting } from "../pages/userSetting";
 
 export const AppRouter = () => {
-
-	return (
-		<BrowserRouter>
-			<CommonComponent />
-			<Routes>
-				<Route path={"/"} element={<Home />} />
-				<Route path={"/about"} element={<About />} />
-				<Route path={"/userSetting"} element={<UserSetting />} />
-				<Route path={"/feedBack"} element={<FeedBack />} />
-				<Route path={"/register"} element={<Register />} />
-				<Route path={"/forget"} element={<Forget />} />
-				<Route path={"/articleList"} element={<ArticleList />} />
-				<Route path={"/article"} element={<Article />} />
-				<Route path={"editArticle"} element={<EditArticle />} />
-			</Routes>
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <CommonComponent />
+      <Routes>
+        <Route path={"/"} element={<Home />} />
+        <Route path={"/about"} element={<About />} />
+        <Route path={"/userSetting"} element={<UserSetting />} />
+        <Route path={"/feedBack"} element={<FeedBack />} />
+        <Route path={"/register"} element={<Register />} />
+        <Route path={"/forget"} element={<Forget />} />
+        <Route path={"/articleList"} element={<ArticleList />} />
+        <Route path={"/article"} element={<Article />} />
+        <Route path={"editArticle"} element={<EditArticle />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };

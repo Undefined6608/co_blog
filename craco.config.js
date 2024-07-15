@@ -23,7 +23,7 @@ module.exports = {
 			maxEntrypointSize: 500000000 // 整数类型（以字节为单位）
 		},
 		// 更改build打包文件名称为dist
-		configure: (webpackConfig, { env, paths }) => {
+		configure: (webpackConfig, {env, paths}) => {
 			webpackConfig.output.path = path.resolve(__dirname, 'dist')
 			paths.appBuild = path.resolve(__dirname, 'dist')
 			return webpackConfig
